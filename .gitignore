@@ -1,0 +1,35 @@
+# Sistem & Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# PHP & Composer
+vendor/
+composer.lock
+
+# Environment & Konfigurasi Sensitif
+.env
+*.env
+
+# Uploads pengguna (jangan push file upload)
+assets/uploads/services/*
+assets/uploads/pdf/*
+assets/uploads/*.jpg
+assets/uploads/*.png
+assets/uploads/*.webp
+assets/uploads/*.jpeg
+!assets/uploads/.gitkeep
+
+# Database & backup
+*.sql
+*.sql.gz
+
+# Log files
+*.log
+
+# Temp / script sekali pakai
+fix_db.php
+Hastra_Karya_Web.zip

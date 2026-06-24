@@ -1,0 +1,21 @@
+RewriteEngine On
+
+# Allow normal access to existing files and directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Sitemap redirect
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Clean URL for Services (Layanan)
+RewriteRule ^layanan/([^/]+)$ layanan.php?slug=$1 [L,QSA]
+
+# Clean URL for Portfolio (Portofolio)
+RewriteRule ^portofolio/([^/]+)$ portofolio.php?slug=$1 [L,QSA]
+
+# Clean URL for News/Articles (Berita)
+RewriteRule ^berita/([^/]+)$ berita.php?slug=$1 [L,QSA]
+
+# Clean URL for Careers (Karir)
+RewriteRule ^karir/([^/]+)$ karir.php?slug=$1 [L,QSA]
