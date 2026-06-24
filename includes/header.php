@@ -98,6 +98,10 @@ try {
                         </li>
                         <li class="nav-item d-none d-lg-block text-white-50 px-1" style="font-size: 0.8rem; opacity: 0.3;">|</li>
                         <li class="nav-item">
+                            <a class="nav-link <?php echo is_active('portofolio.php'); ?>" href="<?php echo base_url('portofolio.php'); ?>">PROYEK</a>
+                        </li>
+                        <li class="nav-item d-none d-lg-block text-white-50 px-1" style="font-size: 0.8rem; opacity: 0.3;">|</li>
+                        <li class="nav-item">
                             <a class="nav-link <?php echo is_active('hubungi-kami.php'); ?>" href="<?php echo base_url('hubungi-kami.php'); ?>">KONTAK</a>
                         </li>
                     </ul>
