@@ -9,6 +9,27 @@ try {
     $stmt_profile = $db->query("SELECT * FROM company_profile WHERE id = 1");
     $profile = $stmt_profile->fetch();
 } catch (Exception $e) {}
+
+// Decode dynamic fields
+$nilai_data = json_decode($profile['nilai_json'] ?? '[]', true) ?: [
+    ['icon' => 'bi-award',        'title' => 'Integritas',        'desc' => 'Menjunjung tinggi etika bisnis, kejujuran, dan transparansi di setiap kesepakatan.'],
+    ['icon' => 'bi-shield-heart', 'title' => 'Keselamatan (K3)',  'desc' => 'Mengutamakan keselamatan dan kesehatan kerja karyawan di setiap area proyek.'],
+    ['icon' => 'bi-gem',          'title' => 'Mutu Unggul',       'desc' => 'Tidak berkompromi terhadap standar kualitas pengerjaan di setiap detail proyek.'],
+    ['icon' => 'bi-people',       'title' => 'Kolaborasi',        'desc' => 'Bekerja secara sinergis dengan klien, mitra bisnis, dan vendor rantai pasok.'],
+];
+$milestones_data = json_decode($profile['milestones_json'] ?? '[]', true) ?: [
+    ['year' => '2020', 'desc' => 'Perusahaan didirikan'],
+    ['year' => '2021', 'desc' => 'Proyek pertama senilai Rp 15M'],
+    ['year' => '2022', 'desc' => 'Raih ISO 9001:2015'],
+    ['year' => '2024', 'desc' => '150+ proyek, 80+ klien'],
+];
+$misi_items = array_filter(explode("\n", $profile['misi_items'] ?? "Menyediakan solusi jasa terintegrasi dengan standar keselamatan kerja dan mutu internasional.\nMembangun kemitraan strategis jangka panjang berdasarkan prinsip transparansi dan saling menguntungkan.\nMemberdayakan talenta profesional lokal terbaik dan memanfaatkan teknologi modern untuk efisiensi.\nMemberikan dampak positif bagi masyarakat melalui program pembangunan ramah lingkungan."), 'trim');
+
+$visi_title = $profile['visi_title'] ?? 'Menjadi Kontraktor Terkemuka Berskala Nasional';
+$visi_text  = $profile['visi_text']  ?? 'Menjadi perusahaan konstruksi, pengadaan, dan konsultansi multi-jasa terkemuka berskala nasional yang dikenal karena integritas, keandalan, inovasi berkelanjutan, serta komitmen penuh menghasilkan kualitas kerja berkelas dunia.';
+$profile_text = $profile['profile_text'] ?? 'PT. Hastra Karya Persada didirikan dengan tujuan menjadi mitra bisnis utama di bidang pembangunan infrastruktur, pengadaan rantai pasok, dan konsultansi manajemen proyek nasional.';
+
+$raw_certs = array_filter(explode("\n", $profile['certificates'] ?? "ISO 9001:2015\nISO 14001:2015\nISO 45001:2018\nSMK3"), 'trim');
 ?>
 
 <!-- Breadcrumb Header -->
@@ -37,25 +58,18 @@ try {
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-6 reveal-left">
-                <p class="section-tag">Sejarah & Profil</p>
+                <p class="section-tag">Sejarah &amp; Profil</p>
                 <h2 class="section-title">Dedikasi Membangun Solusi Terbaik <em style="font-style:italic;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Sejak 2020</em></h2>
                 <span class="section-divider"></span>
-                <div class="mt-4" style="font-size:1.05rem;line-height:1.85;white-space:pre-wrap;color:var(--gray-text);">
-                    <?php echo sanitize($profile['profile_text'] ?? 'Sejarah dan profil perusahaan belum diatur.'); ?>
+                <div class="mt-4" style="font-size:1.05rem;line-height:1.85;color:var(--gray-text);">
+                    <?php echo nl2br(sanitize($profile_text)); ?>
                 </div>
                 <div class="row g-3 mt-2">
-                    <?php
-                    $milestones = [
-                        ['2020','Perusahaan didirikan'],
-                        ['2021','Proyek pertama senilai Rp 15M'],
-                        ['2022','Raih ISO 9001:2015'],
-                        ['2024','150+ proyek, 80+ klien'],
-                    ];
-                    foreach ($milestones as $m): ?>
+                    <?php foreach ($milestones_data as $m): ?>
                     <div class="col-6">
                         <div style="display:flex;align-items:flex-start;gap:.75rem;padding:1rem;background:var(--off-white);border-radius:var(--radius-sm);border:1px solid rgba(11,31,58,.06);">
-                            <span style="font-size:1.2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;"><?php echo $m[0]; ?></span>
-                            <span style="font-size:.82rem;color:var(--gray-text);line-height:1.4;"><?php echo $m[1]; ?></span>
+                            <span style="font-size:1.2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;"><?php echo sanitize($m['year']); ?></span>
+                            <span style="font-size:.82rem;color:var(--gray-text);line-height:1.4;"><?php echo sanitize($m['desc']); ?></span>
                         </div>
                     </div>
                     <?php endforeach; ?>
@@ -69,7 +83,7 @@ try {
                          style="height:480px;object-fit:cover;box-shadow:0 40px 80px rgba(11,31,58,.15);">
                     <!-- Floating badge -->
                     <div style="position:absolute;bottom:2rem;left:-2rem;background:var(--navy);border-radius:var(--radius);padding:1.5rem 2rem;border:1px solid rgba(201,162,39,.2);box-shadow:0 20px 50px rgba(0,0,0,.25);">
-                        <div style="font-size:2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">99%</div>
+                        <div style="font-size:2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;"><?php echo sanitize($settings['stat_kepuasan'] ?? '99'); ?>%</div>
                         <div style="color:rgba(255,255,255,.5);font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;margin-top:.25rem;">Kepuasan Klien</div>
                     </div>
                 </div>
@@ -83,8 +97,8 @@ try {
 <section style="background:var(--off-white);padding:5rem 0;">
     <div class="container">
         <div class="text-center mb-5 reveal">
-            <p class="section-tag">Arah & Tujuan</p>
-            <h2 class="section-title">Visi & Misi Perusahaan</h2>
+            <p class="section-tag">Arah &amp; Tujuan</p>
+            <h2 class="section-title">Visi &amp; Misi Perusahaan</h2>
             <span class="section-divider center"></span>
         </div>
         <div class="row g-4">
@@ -96,9 +110,9 @@ try {
                         <i class="bi-eye" style="background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.1rem;"></i>
                         <span style="font-size:.75rem;letter-spacing:3px;text-transform:uppercase;font-weight:800;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Visi</span>
                     </div>
-                    <h3 style="font-family:var(--font-head);color:#fff;font-size:1.6rem;margin-bottom:1rem;">Menjadi Kontraktor Terkemuka Berskala Nasional</h3>
+                    <h3 style="font-family:var(--font-head);color:#fff;font-size:1.6rem;margin-bottom:1rem;"><?php echo sanitize($visi_title); ?></h3>
                     <p style="color:rgba(255,255,255,.55);line-height:1.8;margin:0;">
-                        Menjadi perusahaan konstruksi, pengadaan, dan konsultansi multi-jasa terkemuka berskala nasional yang dikenal karena integritas, keandalan, inovasi berkelanjutan, serta komitmen penuh menghasilkan kualitas kerja berkelas dunia.
+                        <?php echo sanitize($visi_text); ?>
                     </p>
                 </div>
             </div>
@@ -110,17 +124,10 @@ try {
                         <span style="font-size:.75rem;letter-spacing:3px;text-transform:uppercase;font-weight:800;color:var(--navy);">Misi</span>
                     </div>
                     <h3 style="font-family:var(--font-head);color:var(--navy);font-size:1.6rem;margin-bottom:1.5rem;">Komitmen Nyata di Setiap Proyek</h3>
-                    <?php
-                    $missions = [
-                        'Menyediakan solusi jasa terintegrasi dengan standar keselamatan kerja dan mutu internasional.',
-                        'Membangun kemitraan strategis jangka panjang berdasarkan prinsip transparansi dan saling menguntungkan.',
-                        'Memberdayakan talenta profesional lokal terbaik dan memanfaatkan teknologi modern untuk efisiensi.',
-                        'Memberikan dampak positif bagi masyarakat melalui program pembangunan ramah lingkungan.',
-                    ];
-                    foreach ($missions as $m): ?>
+                    <?php foreach ($misi_items as $m): if(trim($m)==='') continue; ?>
                     <div style="display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(11,31,58,.05);">
                         <i class="bi-check-circle-fill" style="color:var(--gold);flex-shrink:0;margin-top:.15rem;"></i>
-                        <span style="font-size:.9rem;color:var(--gray-text);line-height:1.65;"><?php echo $m; ?></span>
+                        <span style="font-size:.9rem;color:var(--gray-text);line-height:1.65;"><?php echo sanitize($m); ?></span>
                     </div>
                     <?php endforeach; ?>
                 </div>
@@ -128,7 +135,6 @@ try {
         </div>
     </div>
 </section>
-
 
 
 <!-- === STRUKTUR PERUSAHAAN === -->
@@ -223,22 +229,6 @@ try {
                         <div style="display:flex;flex-direction:column;align-items:center;">
                             <div style="width:2px;height:16px;background:rgba(201,162,39,.25);"></div>
                             <?php render_org_card($l4, 'sm'); ?>
-
-                            <?php $level5 = $org_map[$l4['id']] ?? []; ?>
-                            <?php if (!empty($level5)): ?>
-                            <div style="width:2px;height:16px;background:rgba(201,162,39,.2);"></div>
-                            <?php if (count($level5) > 1): ?>
-                            <div style="width:80%;height:2px;background:rgba(201,162,39,.2);"></div>
-                            <?php endif; ?>
-                            <div style="display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;">
-                                <?php foreach ($level5 as $l5): // Level 5 ?>
-                                <div style="display:flex;flex-direction:column;align-items:center;">
-                                    <div style="width:2px;height:14px;background:rgba(201,162,39,.15);"></div>
-                                    <?php render_org_card($l5, 'sm'); ?>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php endif; ?>
                         </div>
                         <?php endforeach; ?>
                     </div>
@@ -262,31 +252,24 @@ try {
 
 
 <!-- === NILAI PERUSAHAAN === -->
-<section style="background:var(--white);padding:5rem 0;">
+<section style="background:var(--off-white);padding:5rem 0;">
     <div class="container">
         <div class="text-center mb-5 reveal">
             <p class="section-tag">Budaya Kami</p>
-            <h2 class="section-title">Nilai Perusahaan & Budaya Kerja</h2>
+            <h2 class="section-title">Nilai Perusahaan &amp; Budaya Kerja</h2>
             <span class="section-divider center"></span>
         </div>
         <div class="row g-4">
-            <?php
-            $values = [
-                ['bi-award','Integritas','Menjunjung tinggi etika bisnis, kejujuran, dan transparansi di setiap kesepakatan.'],
-                ['bi-shield-heart','Keselamatan (K3)','Mengutamakan keselamatan dan kesehatan kerja karyawan di setiap area proyek.'],
-                ['bi-gem','Mutu Unggul','Tidak berkompromi terhadap standar kualitas pengerjaan di setiap detail proyek.'],
-                ['bi-people','Kolaborasi','Bekerja secara sinergis dengan klien, mitra bisnis, dan vendor rantai pasok.'],
-            ];
-            foreach ($values as $i => $v): ?>
+            <?php foreach ($nilai_data as $i => $v): ?>
             <div class="col-lg-3 col-sm-6 reveal" style="transition-delay:<?php echo $i * .1; ?>s">
-                <div style="background:var(--off-white);border-radius:var(--radius);padding:2rem 1.75rem;text-align:center;border:1px solid rgba(11,31,58,.06);transition:all .4s var(--ease);box-shadow:var(--shadow-card);"
+                <div style="background:var(--white);border-radius:var(--radius);padding:2rem 1.75rem;text-align:center;border:1px solid rgba(11,31,58,.06);transition:all .4s var(--ease);box-shadow:var(--shadow-card);"
                      onmouseover="this.style.borderColor='rgba(201,162,39,.3)';this.style.transform='translateY(-8px)';this.style.boxShadow='0 20px 60px rgba(11,31,58,.12)'"
                      onmouseout="this.style.borderColor='rgba(11,31,58,.06)';this.style.transform='translateY(0)';this.style.boxShadow='var(--shadow-card)'">
                     <div style="width:64px;height:64px;border-radius:50%;background:var(--grad-navy);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
-                        <i class="bi <?php echo $v[0]; ?>" style="font-size:1.6rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
+                        <i class="bi <?php echo sanitize($v['icon']); ?>" style="font-size:1.6rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
                     </div>
-                    <h4 style="font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:.75rem;"><?php echo $v[1]; ?></h4>
-                    <p style="font-size:.875rem;margin:0;line-height:1.7;"><?php echo $v[2]; ?></p>
+                    <h4 style="font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:.75rem;"><?php echo sanitize($v['title']); ?></h4>
+                    <p style="font-size:.875rem;margin:0;line-height:1.7;"><?php echo sanitize($v['desc']); ?></p>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -304,22 +287,14 @@ try {
         <h2 style="font-family:var(--font-head);color:#fff;font-size:clamp(1.75rem,3vw,2.5rem);margin-bottom:1rem;" class="reveal">Komitmen Mutu Kelas Dunia</h2>
         <p style="color:rgba(255,255,255,.5);max-width:600px;margin:0 auto 3rem;" class="reveal">Seluruh aspek operasional kami mengacu pada standar internasional yang diakui secara global.</p>
         <div class="row justify-content-center g-4 reveal">
-            <?php
-            $raw_certs = explode("\n", $profile['certificates'] ?? "ISO 9001:2015\nISO 14001:2015\nISO 45001:2018\nSMK3");
-            $certs = [];
-            foreach ($raw_certs as $rc) {
-                if(trim($rc) !== '') {
-                    $certs[] = [trim($rc), 'Standar Internasional', 'bi-patch-check-fill'];
-                }
-            }
-            foreach ($certs as $c): ?>
+            <?php foreach ($raw_certs as $cert): if(trim($cert)==='') continue; ?>
             <div class="col-lg-3 col-sm-6">
                 <div style="background:rgba(255,255,255,.04);border:1px solid rgba(201,162,39,.2);border-radius:var(--radius);padding:2rem 1.5rem;transition:all .4s var(--ease);"
                      onmouseover="this.style.background='rgba(201,162,39,.08)';this.style.borderColor='rgba(201,162,39,.4)';this.style.transform='translateY(-6px)'"
                      onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(201,162,39,.2)';this.style.transform='translateY(0)'">
-                    <i class="bi <?php echo $c[2]; ?>" style="font-size:2rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-bottom:1rem;"></i>
-                    <div style="font-size:1.15rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.4rem;"><?php echo $c[0]; ?></div>
-                    <div style="color:rgba(255,255,255,.45);font-size:.82rem;"><?php echo $c[1]; ?></div>
+                    <i class="bi bi-patch-check-fill" style="font-size:2rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-bottom:1rem;"></i>
+                    <div style="font-size:1.1rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.4rem;"><?php echo sanitize(trim($cert)); ?></div>
+                    <div style="color:rgba(255,255,255,.45);font-size:.82rem;">Standar Internasional</div>
                 </div>
             </div>
             <?php endforeach; ?>

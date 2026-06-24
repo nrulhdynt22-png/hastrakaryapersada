@@ -69,9 +69,6 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
             <a class="sidebar-link <?php echo ($admin_current_page === 'services.php') ? 'active' : ''; ?>" href="services.php">
                 <i class="bi-gear-wide-connected"></i><span>Kelola Layanan</span>
             </a>
-            <a class="sidebar-link <?php echo ($admin_current_page === 'portfolio.php') ? 'active' : ''; ?>" href="portfolio.php">
-                <i class="bi-building"></i><span>Kelola Proyek</span>
-            </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'company_profile.php') ? 'active' : ''; ?>" href="company_profile.php">
                 <i class="bi-file-earmark-person-fill"></i><span>Kelola Tentang</span>
             </a>

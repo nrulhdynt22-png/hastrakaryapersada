@@ -36,13 +36,6 @@ try {
     $services = $stmt->fetchAll();
 } catch (Exception $e) {}
 
-// Fetch latest portfolio projects
-$portfolios = [];
-try {
-    $stmt = $db->query("SELECT * FROM portfolio ORDER BY id DESC LIMIT 3");
-    $portfolios = $stmt->fetchAll();
-} catch (Exception $e) {}
-
 // Fetch advantages
 $advantages = [];
 try {
@@ -73,11 +66,6 @@ $svc_imgs = [
     'konstruksi-dan-infrastruktur' => "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
     'pengadaan-barang-dan-jasa'    => "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
     'konsultansi-manajemen-proyek' => "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
-];
-$port_imgs = [
-    'pembangunan-gedung-perkantoran-menara-hastra'   => "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
-    'pengadaan-alat-berat-proyek-jalan-tol-sumatera' => "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=800&q=80",
-    'manajemen-pengawasan-renovasi-bandara-international' => "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80",
 ];
 ?>
 
@@ -332,44 +320,6 @@ if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
 </section>
 
 
-<!-- ============================================================
-     6. PORTFOLIO — Asymmetric 3-grid with hover
-============================================================ -->
-<section class="py-5" style="background:var(--white);padding-top:7rem!important;padding-bottom:6rem!important;">
-    <div class="container">
-        <div class="row justify-content-between align-items-end mb-5">
-            <div class="col-lg-6 reveal-left">
-                <p class="section-tag">Rekam Jejak</p>
-                <h2 class="section-title">Portofolio Proyek Terpilih</h2>
-                <span class="section-divider"></span>
-            </div>
-            <div class="col-lg-4 text-lg-end reveal-right">
-                <a href="<?php echo base_url('portofolio.php'); ?>" class="btn-gold" style="display:inline-flex;">Lihat Semua <i class="bi-arrow-right"></i></a>
-            </div>
-        </div>
-
-        <div class="row g-4 justify-content-center">
-            <?php foreach ($portfolios as $i => $p):
-                $pimg = !empty($p['image']) && file_exists(__DIR__.'/assets/uploads/portfolio/'.$p['image'])
-                    ? base_url('assets/uploads/portfolio/'.$p['image'])
-                    : ($port_imgs[$p['slug']] ?? array_values($port_imgs)[0]);
-            ?>
-            <div class="col-lg-4 col-md-6 reveal" style="transition-delay:<?php echo $i * 0.15; ?>s">
-                <a href="<?php echo base_url('portofolio/'.$p['slug']); ?>" class="text-decoration-none d-block">
-                    <div class="portfolio-item">
-                        <img src="<?php echo $pimg; ?>" class="portfolio-img" alt="<?php echo sanitize($p['title']); ?>" style="height:320px;object-fit:cover;">
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-category"><?php echo sanitize($p['category']); ?></span>
-                            <h4 class="portfolio-title"><?php echo sanitize($p['title']); ?></h4>
-                            <p style="color:rgba(255,255,255,.55);font-size:.85rem;margin:.5rem 0 0;"><i class="bi-geo-alt me-1"></i><?php echo sanitize($p['location']); ?> &middot; <?php echo sanitize($p['year']); ?></p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
 
 
 <!-- ============================================================
@@ -418,11 +368,6 @@ if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
                     <a href="<?php echo base_url('hubungi-kami.php'); ?>" class="btn-gold" style="display:inline-flex;font-size:1rem;padding:1rem 2.25rem;">
                         Hubungi Tim Kami <i class="bi-arrow-right"></i>
                     </a>
-                    <div class="mt-3">
-                        <a href="<?php echo base_url('company-profile.php'); ?>" style="color:rgba(255,255,255,.4);font-size:.82rem;text-decoration:none;transition:color .3s;" onmouseover="this.style.color='rgba(201,162,39,.8)'" onmouseout="this.style.color='rgba(255,255,255,.4)'">
-                            Unduh Company Profile <i class="bi-download ms-1"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>

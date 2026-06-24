@@ -24,7 +24,6 @@
                     <a href="<?php echo base_url(); ?>">Home</a>
                     <a href="<?php echo base_url('tentang.php'); ?>">Tentang</a>
                     <a href="<?php echo base_url('layanan.php'); ?>">Layanan</a>
-                    <a href="<?php echo base_url('portofolio.php'); ?>">Proyek</a>
                     <a href="<?php echo base_url('hubungi-kami.php'); ?>">Kontak</a>
                 </div>
 
