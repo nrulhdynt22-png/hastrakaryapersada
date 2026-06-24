@@ -163,13 +163,13 @@ class Database {
 
             CREATE TABLE IF NOT EXISTS `company_profile` (
                 `id` INT PRIMARY KEY DEFAULT 1,
-                `director_speech` TEXT NOT NULL,
-                `profile_text` TEXT NOT NULL,
-                `legality` TEXT NOT NULL,
-                `structure_img` VARCHAR(255) NULL,
-                `business_sectors` TEXT NOT NULL,
-                `certificates` TEXT NOT NULL,
-                `pdf_path` VARCHAR(255) NULL
+                `profile_text` TEXT NULL,
+                `visi_title` VARCHAR(255) NULL,
+                `visi_text` TEXT NULL,
+                `misi_items` TEXT NULL,
+                `nilai_json` LONGTEXT NULL,
+                `milestones_json` LONGTEXT NULL,
+                `certificates` TEXT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
             CREATE TABLE IF NOT EXISTS `org_structure` (
@@ -308,13 +308,15 @@ class Database {
             ]);
 
             // Seed company_profile
-            $stmtProfile = $this->conn->prepare("INSERT INTO `company_profile` (id, director_speech, profile_text, legality, business_sectors, certificates) VALUES (1, ?, ?, ?, ?, ?)");
+            $stmtProfile = $this->conn->prepare("INSERT INTO `company_profile` (id, profile_text, visi_title, visi_text, misi_items, nilai_json, milestones_json, certificates) VALUES (1, ?, ?, ?, ?, ?, ?, ?)");
             $stmtProfile->execute([
-                'Selamat datang di website resmi PT. Hastra Karya Persada. Di era globalisasi dan perkembangan teknologi yang sangat dinamis ini, kami terus berkomitmen menjadi garda terdepan dalam menyediakan solusi konstruksi, pengadaan, dan konsultansi manajemen yang andal. Kepercayaan Anda adalah fondasi utama kami untuk terus berkarya membangun masa depan bangsa.',
-                'PT. Hastra Karya Persada berdiri dengan visi menjadi perusahaan konstruksi dan multi-jasa terkemuka di tingkat nasional yang dikenal karena integritas, kualitas, dan ketepatan waktu. Kami didukung oleh tim profesional yang berpengalaman serta berkomitmen tinggi untuk memberikan hasil terbaik di setiap proyek.',
-                "Akte Pendirian: No. 45 Tanggal 12 Januari 2020\nSK Kemenkumham: AHU-0012345.AH.01.01.Tahun 2020\nNIB (Nomor Induk Berusaha): 9120001234567\nNPWP: 91.222.333.4-015.000\nSBU (Sertifikat Badan Usaha): Klasifikasi Menengah (M1)",
-                "1. Konstruksi Bangunan Sipil (Gedung, Jalan, Jembatan)\n2. Pengadaan Barang Umum dan Peralatan Industri / IT\n3. Jasa Konsultansi Manajemen Proyek & Teknik Sipil",
-                "ISO 9001:2015 (Sistem Manajemen Mutu)\nISO 14001:2015 (Sistem Manajemen Lingkungan)\nISO 45001:2018 (Sistem Manajemen K3)\nSertifikasi SMK3 Kementerian Ketenagakerjaan RI"
+                'PT. Hastra Karya Persada didirikan dengan tujuan menjadi mitra bisnis utama di bidang pembangunan infrastruktur, pengadaan rantai pasok, dan konsultansi manajemen proyek nasional.',
+                'Menjadi Kontraktor Terkemuka Berskala Nasional',
+                'Menjadi perusahaan konstruksi, pengadaan, dan konsultansi multi-jasa terkemuka berskala nasional yang dikenal karena integritas, keandalan, inovasi berkelanjutan, serta komitmen penuh menghasilkan kualitas kerja berkelas dunia.',
+                "Menyediakan solusi jasa terintegrasi dengan standar keselamatan kerja dan mutu internasional.\nMembangun kemitraan strategis jangka panjang berdasarkan prinsip transparansi dan saling menguntungkan.\nMemberdayakan talenta profesional lokal terbaik dan memanfaatkan teknologi modern untuk efisiensi.\nMemberikan dampak positif bagi masyarakat melalui program pembangunan ramah lingkungan.",
+                '[{"icon":"bi-award","title":"Integritas","desc":"Menjunjung tinggi etika bisnis, kejujuran, dan transparansi di setiap kesepakatan."},{"icon":"bi-shield-heart","title":"Keselamatan (K3)","desc":"Mengutamakan keselamatan dan kesehatan kerja karyawan di setiap area proyek."},{"icon":"bi-gem","title":"Mutu Unggul","desc":"Tidak berkompromi terhadap standar kualitas pengerjaan di setiap detail proyek."},{"icon":"bi-people","title":"Kolaborasi","desc":"Bekerja secara sinergis dengan klien, mitra bisnis, dan vendor rantai pasok."}]',
+                '[{"year":"2020","desc":"Perusahaan didirikan"},{"year":"2021","desc":"Proyek pertama senilai Rp 15M"},{"year":"2022","desc":"Raih ISO 9001:2015"},{"year":"2024","desc":"150+ proyek, 80+ klien"}]',
+                "ISO 9001:2015\nISO 14001:2015\nISO 45001:2018\nSMK3"
             ]);
 
             // Seed org_structure (sesuai gambar struktur organisasi)
@@ -362,6 +364,29 @@ class Database {
                 'Project Manager'
             ]);
         }
+
+        // --- Migration: update company_profile to new schema if old columns exist ---
+        $this->migrateCompanyProfile();
+    }
+
+    private function migrateCompanyProfile() {
+        try {
+            // Add new columns if they don't exist yet
+            $newCols = [
+                'visi_title'      => "VARCHAR(255) NULL",
+                'visi_text'       => "TEXT NULL",
+                'misi_items'      => "TEXT NULL",
+                'nilai_json'      => "LONGTEXT NULL",
+                'milestones_json' => "LONGTEXT NULL",
+            ];
+            foreach ($newCols as $col => $def) {
+                try {
+                    $this->conn->exec("ALTER TABLE `company_profile` ADD COLUMN `$col` $def");
+                } catch (Exception $e) { /* already exists */ }
+            }
+            // Ensure row id=1 exists
+            $this->conn->exec("INSERT IGNORE INTO `company_profile` (id) VALUES (1)");
+        } catch (Exception $e) { /* table may not exist yet */ }
     }
 }
 ?>
