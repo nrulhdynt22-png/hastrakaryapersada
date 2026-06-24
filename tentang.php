@@ -1,0 +1,214 @@
+<?php
+$page_title = "Tentang Kami — PT. Hastra Karya Persada";
+$page_desc  = "Kenali sejarah, visi, misi, dan nilai-nilai PT. Hastra Karya Persada — mitra konstruksi dan infrastruktur terpercaya sejak 2020.";
+include __DIR__ . '/includes/header.php';
+?>
+
+<!-- Breadcrumb Header -->
+<section class="breadcrumb-section">
+    <div class="container" style="position:relative;z-index:1;">
+        <div class="row align-items-end">
+            <div class="col-lg-7">
+                <p style="color:var(--gold-light);font-size:.75rem;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:.75rem;">PT. Hastra Karya Persada</p>
+                <h1 style="font-family:var(--font-head);font-size:clamp(2.2rem,4vw,3.5rem);font-weight:800;color:#fff;line-height:1.1;margin-bottom:1rem;">
+                    Tentang <em style="font-style:italic;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Perusahaan</em>
+                </h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-custom mb-0">
+                        <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>">Home</a></li>
+                        <li class="breadcrumb-item active">Tentang Kami</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- === SEJARAH & PROFIL === -->
+<section class="py-5 overflow-hidden" style="background:var(--white);padding-top:5rem!important;padding-bottom:5rem!important;">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 reveal-left">
+                <p class="section-tag">Sejarah & Profil</p>
+                <h2 class="section-title">Dedikasi Membangun Solusi Terbaik <em style="font-style:italic;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Sejak 2020</em></h2>
+                <span class="section-divider"></span>
+                <p class="mt-4" style="font-size:1.05rem;line-height:1.85;">
+                    PT. Hastra Karya Persada didirikan dengan tujuan menjadi mitra bisnis utama di bidang pembangunan infrastruktur, pengadaan rantai pasok, dan konsultansi manajemen proyek nasional. Berawal dari visi sederhana namun kuat, kini kami tumbuh menjadi entitas korporat yang kokoh, adaptif, dan tepercaya.
+                </p>
+                <p style="font-size:1rem;line-height:1.85;">
+                    Kami senantiasa beradaptasi dengan perkembangan teknologi terkini guna memberikan efisiensi optimal. Kombinasi antara talenta profesional solid dan manajemen mutu bersertifikasi global adalah jaminan layanan terbaik yang kami tawarkan.
+                </p>
+                <div class="row g-3 mt-2">
+                    <?php
+                    $milestones = [
+                        ['2020','Perusahaan didirikan'],
+                        ['2021','Proyek pertama senilai Rp 15M'],
+                        ['2022','Raih ISO 9001:2015'],
+                        ['2024','150+ proyek, 80+ klien'],
+                    ];
+                    foreach ($milestones as $m): ?>
+                    <div class="col-6">
+                        <div style="display:flex;align-items:flex-start;gap:.75rem;padding:1rem;background:var(--off-white);border-radius:var(--radius-sm);border:1px solid rgba(11,31,58,.06);">
+                            <span style="font-size:1.2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;"><?php echo $m[0]; ?></span>
+                            <span style="font-size:.82rem;color:var(--gray-text);line-height:1.4;"><?php echo $m[1]; ?></span>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="col-lg-6 reveal-right">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=85"
+                         class="img-fluid rounded-4 w-100"
+                         alt="Kantor Hastra"
+                         style="height:480px;object-fit:cover;box-shadow:0 40px 80px rgba(11,31,58,.15);">
+                    <!-- Floating badge -->
+                    <div style="position:absolute;bottom:2rem;left:-2rem;background:var(--navy);border-radius:var(--radius);padding:1.5rem 2rem;border:1px solid rgba(201,162,39,.2);box-shadow:0 20px 50px rgba(0,0,0,.25);">
+                        <div style="font-size:2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">99%</div>
+                        <div style="color:rgba(255,255,255,.5);font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;margin-top:.25rem;">Kepuasan Klien</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- === VISI & MISI === -->
+<section style="background:var(--off-white);padding:5rem 0;">
+    <div class="container">
+        <div class="text-center mb-5 reveal">
+            <p class="section-tag">Arah & Tujuan</p>
+            <h2 class="section-title">Visi & Misi Perusahaan</h2>
+            <span class="section-divider center"></span>
+        </div>
+        <div class="row g-4">
+            <!-- Visi -->
+            <div class="col-lg-6 reveal-left">
+                <div style="background:var(--grad-navy);border-radius:var(--radius);padding:2.5rem;height:100%;position:relative;overflow:hidden;border:1px solid rgba(201,162,39,.15);">
+                    <div style="position:absolute;top:-30px;right:-30px;width:150px;height:150px;border:1px solid rgba(201,162,39,.08);border-radius:50%;"></div>
+                    <div style="display:inline-flex;align-items:center;gap:.75rem;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.2);border-radius:100px;padding:.5rem 1.25rem;margin-bottom:1.5rem;">
+                        <i class="bi-eye" style="background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.1rem;"></i>
+                        <span style="font-size:.75rem;letter-spacing:3px;text-transform:uppercase;font-weight:800;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Visi</span>
+                    </div>
+                    <h3 style="font-family:var(--font-head);color:#fff;font-size:1.6rem;margin-bottom:1rem;">Menjadi Kontraktor Terkemuka Berskala Nasional</h3>
+                    <p style="color:rgba(255,255,255,.55);line-height:1.8;margin:0;">
+                        Menjadi perusahaan konstruksi, pengadaan, dan konsultansi multi-jasa terkemuka berskala nasional yang dikenal karena integritas, keandalan, inovasi berkelanjutan, serta komitmen penuh menghasilkan kualitas kerja berkelas dunia.
+                    </p>
+                </div>
+            </div>
+            <!-- Misi -->
+            <div class="col-lg-6 reveal-right">
+                <div style="background:var(--white);border-radius:var(--radius);padding:2.5rem;height:100%;border:1px solid rgba(11,31,58,.07);box-shadow:var(--shadow-card);">
+                    <div style="display:inline-flex;align-items:center;gap:.75rem;background:rgba(11,31,58,.04);border:1px solid rgba(11,31,58,.1);border-radius:100px;padding:.5rem 1.25rem;margin-bottom:1.5rem;">
+                        <i class="bi-compass" style="color:var(--navy);font-size:1.1rem;"></i>
+                        <span style="font-size:.75rem;letter-spacing:3px;text-transform:uppercase;font-weight:800;color:var(--navy);">Misi</span>
+                    </div>
+                    <h3 style="font-family:var(--font-head);color:var(--navy);font-size:1.6rem;margin-bottom:1.5rem;">Komitmen Nyata di Setiap Proyek</h3>
+                    <?php
+                    $missions = [
+                        'Menyediakan solusi jasa terintegrasi dengan standar keselamatan kerja dan mutu internasional.',
+                        'Membangun kemitraan strategis jangka panjang berdasarkan prinsip transparansi dan saling menguntungkan.',
+                        'Memberdayakan talenta profesional lokal terbaik dan memanfaatkan teknologi modern untuk efisiensi.',
+                        'Memberikan dampak positif bagi masyarakat melalui program pembangunan ramah lingkungan.',
+                    ];
+                    foreach ($missions as $m): ?>
+                    <div style="display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(11,31,58,.05);">
+                        <i class="bi-check-circle-fill" style="color:var(--gold);flex-shrink:0;margin-top:.15rem;"></i>
+                        <span style="font-size:.9rem;color:var(--gray-text);line-height:1.65;"><?php echo $m; ?></span>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- === NILAI PERUSAHAAN === -->
+<section style="background:var(--white);padding:5rem 0;">
+    <div class="container">
+        <div class="text-center mb-5 reveal">
+            <p class="section-tag">Budaya Kami</p>
+            <h2 class="section-title">Nilai Perusahaan & Budaya Kerja</h2>
+            <span class="section-divider center"></span>
+        </div>
+        <div class="row g-4">
+            <?php
+            $values = [
+                ['bi-award','Integritas','Menjunjung tinggi etika bisnis, kejujuran, dan transparansi di setiap kesepakatan.'],
+                ['bi-shield-heart','Keselamatan (K3)','Mengutamakan keselamatan dan kesehatan kerja karyawan di setiap area proyek.'],
+                ['bi-gem','Mutu Unggul','Tidak berkompromi terhadap standar kualitas pengerjaan di setiap detail proyek.'],
+                ['bi-people','Kolaborasi','Bekerja secara sinergis dengan klien, mitra bisnis, dan vendor rantai pasok.'],
+            ];
+            foreach ($values as $i => $v): ?>
+            <div class="col-lg-3 col-sm-6 reveal" style="transition-delay:<?php echo $i * .1; ?>s">
+                <div style="background:var(--off-white);border-radius:var(--radius);padding:2rem 1.75rem;text-align:center;border:1px solid rgba(11,31,58,.06);transition:all .4s var(--ease);box-shadow:var(--shadow-card);"
+                     onmouseover="this.style.borderColor='rgba(201,162,39,.3)';this.style.transform='translateY(-8px)';this.style.boxShadow='0 20px 60px rgba(11,31,58,.12)'"
+                     onmouseout="this.style.borderColor='rgba(11,31,58,.06)';this.style.transform='translateY(0)';this.style.boxShadow='var(--shadow-card)'">
+                    <div style="width:64px;height:64px;border-radius:50%;background:var(--grad-navy);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+                        <i class="bi <?php echo $v[0]; ?>" style="font-size:1.6rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
+                    </div>
+                    <h4 style="font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:.75rem;"><?php echo $v[1]; ?></h4>
+                    <p style="font-size:.875rem;margin:0;line-height:1.7;"><?php echo $v[2]; ?></p>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+
+<!-- === SERTIFIKASI === -->
+<section style="background:var(--grad-navy);padding:5rem 0;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;border:1px solid rgba(201,162,39,.07);border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;border:1px solid rgba(201,162,39,.07);border-radius:50%;"></div>
+    <div class="container text-center" style="position:relative;z-index:1;">
+        <p class="section-tag reveal">Standar Global</p>
+        <h2 style="font-family:var(--font-head);color:#fff;font-size:clamp(1.75rem,3vw,2.5rem);margin-bottom:1rem;" class="reveal">Komitmen Mutu Kelas Dunia</h2>
+        <p style="color:rgba(255,255,255,.5);max-width:600px;margin:0 auto 3rem;" class="reveal">Seluruh aspek operasional kami mengacu pada standar internasional yang diakui secara global.</p>
+        <div class="row justify-content-center g-4 reveal">
+            <?php
+            $certs = [
+                ['ISO 9001:2015','Sistem Manajemen Mutu','bi-patch-check-fill'],
+                ['ISO 14001:2015','Manajemen Lingkungan','bi-tree-fill'],
+                ['ISO 45001:2018','Keselamatan & Kesehatan Kerja','bi-shield-fill-check'],
+                ['SMK3','Sistem Manajemen K3','bi-award-fill'],
+            ];
+            foreach ($certs as $c): ?>
+            <div class="col-lg-3 col-sm-6">
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(201,162,39,.2);border-radius:var(--radius);padding:2rem 1.5rem;transition:all .4s var(--ease);"
+                     onmouseover="this.style.background='rgba(201,162,39,.08)';this.style.borderColor='rgba(201,162,39,.4)';this.style.transform='translateY(-6px)'"
+                     onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(201,162,39,.2)';this.style.transform='translateY(0)'">
+                    <i class="bi <?php echo $c[2]; ?>" style="font-size:2rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-bottom:1rem;"></i>
+                    <div style="font-size:1.15rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.4rem;"><?php echo $c[0]; ?></div>
+                    <div style="color:rgba(255,255,255,.45);font-size:.82rem;"><?php echo $c[1]; ?></div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<!-- === CTA === -->
+<section style="background:var(--off-white);padding:5rem 0;">
+    <div class="container reveal">
+        <div class="cta-box">
+            <div class="row align-items-center g-4" style="position:relative;z-index:1;">
+                <div class="col-lg-8">
+                    <p class="section-tag">Bergabung Bersama Kami</p>
+                    <h2 style="font-family:var(--font-head);color:#fff;font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:.75rem;">Mulai Proyek Impian Anda Sekarang</h2>
+                    <p style="color:rgba(255,255,255,.5);margin:0;">Kami siap menjadi mitra konstruksi dan pengadaan terpercaya untuk bisnis Anda.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="<?php echo base_url('hubungi-kami.php'); ?>" class="btn-gold" style="display:inline-flex;">
+                        Konsultasi Gratis <i class="bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>
