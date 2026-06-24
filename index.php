@@ -171,10 +171,10 @@ if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
             <!-- Left: Large number + tagline  -->
             <div class="col-lg-5 reveal-left">
                 <p class="section-tag">Tentang Perusahaan</p>
-                <h2 class="section-title">Membangun Masa Depan dengan <em style="font-style:italic;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Presisi</em></h2>
+                <h2 class="section-title"><?php echo html_entity_decode($settings['home_about_title'] ?? 'Membangun Masa Depan dengan <em>Presisi</em>'); ?></h2>
                 <span class="section-divider"></span>
                 <p class="mt-4 mb-4" style="font-size:1.05rem;line-height:1.8;">
-                    Sejak 2020, PT. Hastra Karya Persada telah menjadi mitra pembangunan nasional yang dipercaya. Kami menghadirkan standar konstruksi, pengadaan, dan konsultansi kelas dunia dengan tim profesional bersertifikat internasional.
+                    <?php echo sanitize($settings['home_about_text'] ?? 'Sejak 2020, PT. Hastra Karya Persada telah menjadi mitra pembangunan nasional yang dipercaya. Kami menghadirkan standar konstruksi, pengadaan, dan konsultansi kelas dunia dengan tim profesional bersertifikat internasional.'); ?>
                 </p>
                 <a href="<?php echo base_url('tentang.php'); ?>" class="btn-gold" style="display:inline-flex;">Profil Kami <i class="bi-arrow-right ms-1"></i></a>
             </div>

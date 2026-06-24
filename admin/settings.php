@@ -80,6 +80,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                         <label for="site_keywords" class="form-label-admin">Meta Keywords (SEO - Pisahkan dengan koma)</label>
                         <input type="text" class="form-control-admin" id="site_keywords" name="site_keywords" required value="<?php echo sanitize($settings['site_keywords'] ?? ''); ?>">
                     </div>
+
+                    <div class="col-12 mt-4">
+                        <h6 style="font-size:.9rem;font-weight:700;color:var(--a-navy);border-bottom:1px solid var(--a-border);padding-bottom:.75rem;margin-bottom:0;">Konten Beranda (Home)</h6>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="home_about_title" class="form-label-admin">Judul Tentang Perusahaan</label>
+                        <input type="text" class="form-control-admin" id="home_about_title" name="home_about_title" placeholder="Contoh: Membangun Masa Depan dengan <em>Presisi</em>" value="<?php echo htmlspecialchars($settings['home_about_title'] ?? 'Membangun Masa Depan dengan <em>Presisi</em>'); ?>">
+                        <small class="text-muted">Gunakan tag <code>&lt;em&gt;Teks&lt;/em&gt;</code> untuk memberikan efek teks berwarna emas.</small>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="home_about_text" class="form-label-admin">Teks Tentang Perusahaan</label>
+                        <textarea class="form-control-admin" id="home_about_text" name="home_about_text" rows="3"><?php echo htmlspecialchars($settings['home_about_text'] ?? 'Sejak 2020, PT. Hastra Karya Persada telah menjadi mitra pembangunan nasional yang dipercaya. Kami menghadirkan standar konstruksi, pengadaan, dan konsultansi kelas dunia dengan tim profesional bersertifikat internasional.'); ?></textarea>
+                    </div>
                     
                     <div class="col-12 mt-4">
                         <h6 style="font-size:.9rem;font-weight:700;color:var(--a-navy);border-bottom:1px solid var(--a-border);padding-bottom:.75rem;margin-bottom:0;">Statistik Halaman Utama</h6>

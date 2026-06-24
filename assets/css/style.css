@@ -103,6 +103,7 @@ a { transition: all .3s var(--ease); }
 /* SECTION LABELS & TITLES */
 .section-tag { display: inline-block; font-size: .7rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; background: var(--grad-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: .75rem; }
 .section-title { font-size: clamp(1.9rem,3.5vw,2.9rem); font-weight: 800; color: var(--navy); margin-bottom: .5rem; line-height: 1.12; }
+.section-title em { font-style: italic; background: var(--grad-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .section-divider { width: 48px; height: 3px; background: var(--grad-gold); border-radius: 100px; margin-top: 1.25rem; display: block; }
 .section-divider.center { margin-left: auto; margin-right: auto; }
 /* ADVANTAGE CARDS */
