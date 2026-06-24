@@ -2,6 +2,13 @@
 $page_title = "Tentang Kami — PT. Hastra Karya Persada";
 $page_desc  = "Kenali sejarah, visi, misi, dan nilai-nilai PT. Hastra Karya Persada — mitra konstruksi dan infrastruktur terpercaya sejak 2020.";
 include __DIR__ . '/includes/header.php';
+
+// Fetch profile data
+$profile = [];
+try {
+    $stmt_profile = $db->query("SELECT * FROM company_profile WHERE id = 1");
+    $profile = $stmt_profile->fetch();
+} catch (Exception $e) {}
 ?>
 
 <!-- Breadcrumb Header -->
@@ -33,12 +40,9 @@ include __DIR__ . '/includes/header.php';
                 <p class="section-tag">Sejarah & Profil</p>
                 <h2 class="section-title">Dedikasi Membangun Solusi Terbaik <em style="font-style:italic;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Sejak 2020</em></h2>
                 <span class="section-divider"></span>
-                <p class="mt-4" style="font-size:1.05rem;line-height:1.85;">
-                    PT. Hastra Karya Persada didirikan dengan tujuan menjadi mitra bisnis utama di bidang pembangunan infrastruktur, pengadaan rantai pasok, dan konsultansi manajemen proyek nasional. Berawal dari visi sederhana namun kuat, kini kami tumbuh menjadi entitas korporat yang kokoh, adaptif, dan tepercaya.
-                </p>
-                <p style="font-size:1rem;line-height:1.85;">
-                    Kami senantiasa beradaptasi dengan perkembangan teknologi terkini guna memberikan efisiensi optimal. Kombinasi antara talenta profesional solid dan manajemen mutu bersertifikasi global adalah jaminan layanan terbaik yang kami tawarkan.
-                </p>
+                <div class="mt-4" style="font-size:1.05rem;line-height:1.85;white-space:pre-wrap;color:var(--gray-text);">
+                    <?php echo sanitize($profile['profile_text'] ?? 'Sejarah dan profil perusahaan belum diatur.'); ?>
+                </div>
                 <div class="row g-3 mt-2">
                     <?php
                     $milestones = [
@@ -301,12 +305,13 @@ include __DIR__ . '/includes/header.php';
         <p style="color:rgba(255,255,255,.5);max-width:600px;margin:0 auto 3rem;" class="reveal">Seluruh aspek operasional kami mengacu pada standar internasional yang diakui secara global.</p>
         <div class="row justify-content-center g-4 reveal">
             <?php
-            $certs = [
-                ['ISO 9001:2015','Sistem Manajemen Mutu','bi-patch-check-fill'],
-                ['ISO 14001:2015','Manajemen Lingkungan','bi-tree-fill'],
-                ['ISO 45001:2018','Keselamatan & Kesehatan Kerja','bi-shield-fill-check'],
-                ['SMK3','Sistem Manajemen K3','bi-award-fill'],
-            ];
+            $raw_certs = explode("\n", $profile['certificates'] ?? "ISO 9001:2015\nISO 14001:2015\nISO 45001:2018\nSMK3");
+            $certs = [];
+            foreach ($raw_certs as $rc) {
+                if(trim($rc) !== '') {
+                    $certs[] = [trim($rc), 'Standar Internasional', 'bi-patch-check-fill'];
+                }
+            }
             foreach ($certs as $c): ?>
             <div class="col-lg-3 col-sm-6">
                 <div style="background:rgba(255,255,255,.04);border:1px solid rgba(201,162,39,.2);border-radius:var(--radius);padding:2rem 1.5rem;transition:all .4s var(--ease);"
