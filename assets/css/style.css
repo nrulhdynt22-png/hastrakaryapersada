@@ -16,8 +16,8 @@
 }
 /* RESET & BASE */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: var(--font-body); color: var(--navy); background: var(--white); overflow-x: hidden; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+body { font-family: var(--font-body); color: var(--navy); background: var(--white); overflow-x: hidden; max-width: 100%; line-height: 1.65; -webkit-font-smoothing: antialiased; }
 h1,h2,h3 { font-family: var(--font-head); font-weight: 700; line-height: 1.1; letter-spacing: -.5px; }
 h4,h5,h6 { font-family: var(--font-body); font-weight: 700; }
 p { color: var(--gray-text); }
