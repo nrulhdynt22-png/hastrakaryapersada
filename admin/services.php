@@ -2,7 +2,7 @@
 include __DIR__ . '/includes/header.php';
 
 $action = isset($_GET['action']) ? sanitize($_GET['action']) : 'list';
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = isset($_POST['id']) ? (int)$_POST['id'] : (isset($_GET['id']) ? (int)$_GET['id'] : 0);
 
 $success_msg = '';
 $error_msg = '';
@@ -203,8 +203,11 @@ try {
         </h5>
     </div>
     <div class="admin-card-body">
-        <form action="?action=<?php echo $action; ?><?php echo $id > 0 ? '&id='.$id : ''; ?>" method="POST" enctype="multipart/form-data">
+        <form action="services.php?action=<?php echo $action; ?><?php echo $id > 0 ? '&id='.$id : ''; ?>" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
+            <?php if ($id > 0): ?>
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
+            <?php endif; ?>
             
             <div class="row g-4 mb-4">
                 <div class="col-md-8">
