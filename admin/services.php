@@ -35,7 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $upload_ok = false;
             } else {
                 $image_name = 'svc_' . time() . '_' . uniqid() . '.' . $file_ext;
-                $dest_path = __DIR__ . '/../assets/uploads/services/' . $image_name;
+                $upload_dir = __DIR__ . '/../assets/uploads/services/';
+                if (!is_dir($upload_dir)) {
+                    mkdir($upload_dir, 0777, true);
+                }
+                $dest_path = $upload_dir . $image_name;
                 
                 if (!move_uploaded_file($file_tmp, $dest_path)) {
                     $error_msg = 'Gagal mengunggah gambar ke server.';
