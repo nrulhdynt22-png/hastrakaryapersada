@@ -201,7 +201,7 @@ try {
     <div class="card border-0 shadow-sm bg-white p-4" style="border-top: 4px solid var(--color-secondary);">
         <h3 class="fw-bold text-primary mb-3 h5"><?php echo ($action === 'add') ? 'Tambah Slider Baru' : 'Edit Slider'; ?></h3>
         
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="?action=<?php echo $action; ?><?php echo $id > 0 ? '&id='.$id : ''; ?>" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
             
             <div class="mb-3">

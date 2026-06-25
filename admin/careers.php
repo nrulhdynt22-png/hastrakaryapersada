@@ -238,7 +238,7 @@ try {
     <div class="card border-0 shadow-sm bg-white p-4" style="border-top: 4px solid var(--color-secondary);">
         <h3 class="fw-bold text-primary mb-3 h5"><?php echo ($action === 'add') ? 'Tambah Lowongan Baru' : 'Edit Lowongan'; ?></h3>
         
-        <form action="" method="POST">
+        <form action="?action=<?php echo $action; ?><?php echo $id > 0 ? '&id='.$id : ''; ?>" method="POST">
             <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
             
             <div class="mb-3">

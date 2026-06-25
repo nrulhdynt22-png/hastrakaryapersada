@@ -107,12 +107,12 @@ if ($action === 'delete' && $id > 0) {
 }
 
 // Fetch single service for edit
-$svc_edit = null;
+$edit_data = null;
 if ($action === 'edit' && $id > 0) {
     try {
         $stmt = $db->prepare("SELECT * FROM services WHERE id = ?");
         $stmt->execute([$id]);
-        $svc_edit = $stmt->fetch();
+        $edit_data = $stmt->fetch();
     } catch (Exception $e) {}
 }
 

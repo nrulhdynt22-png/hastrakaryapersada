@@ -126,7 +126,7 @@ $all_ids = array_column($members, 'id');
                 <?php endif; ?>
             </div>
             <div class="admin-card-body">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="?action=<?php echo $action; ?><?php echo $id > 0 ? '&id='.$id : ''; ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                     <input type="hidden" name="save_org" value="1">
                     <input type="hidden" name="edit_id" value="<?php echo $edit_data ? $edit_data['id'] : ''; ?>">
