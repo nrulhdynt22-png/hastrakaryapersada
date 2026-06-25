@@ -21,7 +21,7 @@ class Database {
             // Ganti 3 baris di bawah ini sesuai dengan database yang Anda buat di Hostinger!
             $this->host = "localhost"; // Di Hostinger biasanya tetap localhost
             $this->username = "u151221364_hastrakarya";    // CONTOH: ganti dengan Username Database Hostinger Anda
-            $this->password = "Admin123!!";   // Diubah dengan huruf kapital A
+            $this->password = "Hastra_Web_2026!#";   // Password unik dan aman
             $this->db_name = "u151221364_hastrakarya";    // CONTOH: ganti dengan Nama Database Hostinger Anda
         }
     }
