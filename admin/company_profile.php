@@ -22,37 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $business_sectors = sanitize($_POST['business_sectors']);
         $certificates = sanitize($_POST['certificates']);
         
-        $structure_img_name = $profile['structure_img'] ?? '';
         $pdf_path_name = $profile['pdf_path'] ?? '';
         
         $upload_ok = true;
         
-        // Handle organizational structure image upload
-        if (isset($_FILES['structure_img']) && $_FILES['structure_img']['error'] === UPLOAD_ERR_OK) {
-            $file_tmp = $_FILES['structure_img']['tmp_name'];
-            $file_name = $_FILES['structure_img']['name'];
-            $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-            $allowed_exts = ['jpg', 'jpeg', 'png', 'webp'];
-            
-            if (!in_array($file_ext, $allowed_exts)) {
-                $error_msg = 'Format gambar struktur organisasi tidak diperbolehkan (hanya JPG, JPEG, PNG, WEBP).';
-                $upload_ok = false;
-            } else {
-                $structure_img_name = 'structure_' . time() . '.' . $file_ext;
-                $dest_path = __DIR__ . '/../assets/uploads/' . $structure_img_name;
-                
-                if (move_uploaded_file($file_tmp, $dest_path)) {
-                    // Delete old structure image if exists
-                    if (!empty($profile['structure_img']) && file_exists(__DIR__ . '/../' . $profile['structure_img'])) {
-                        unlink(__DIR__ . '/../' . $profile['structure_img']);
-                    }
-                    $structure_img_name = 'assets/uploads/' . $structure_img_name;
-                } else {
-                    $error_msg = 'Gagal mengunggah gambar struktur organisasi.';
-                    $upload_ok = false;
-                }
-            }
-        }
+
         
         // Handle Company Profile PDF upload
         if ($upload_ok && isset($_FILES['pdf_file']) && $_FILES['pdf_file']['error'] === UPLOAD_ERR_OK) {
@@ -82,12 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($upload_ok) {
             try {
-                $stmt = $db->prepare("UPDATE company_profile SET director_speech = ?, profile_text = ?, legality = ?, structure_img = ?, business_sectors = ?, certificates = ?, pdf_path = ? WHERE id = 1");
+                $stmt = $db->prepare("UPDATE company_profile SET director_speech = ?, profile_text = ?, legality = ?, business_sectors = ?, certificates = ?, pdf_path = ? WHERE id = 1");
                 $stmt->execute([
                     $director_speech,
                     $profile_text,
                     $legality,
-                    $structure_img_name,
+
                     $business_sectors,
                     $certificates,
                     $pdf_path_name
@@ -158,17 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- File Uploads -->
         <div class="row mb-5 g-4">
-            <!-- Struktur Organisasi -->
-            <div class="col-md-6">
-                <label for="structure_img" class="form-label-admin">Gambar Struktur Organisasi (Format: JPG, JPEG, PNG, WEBP)</label>
-                <input type="file" class="form-control-admin" style="background:#fff;" id="structure_img" name="structure_img">
-                <?php if (!empty($profile['structure_img'])): ?>
-                    <div class="mt-3 text-start">
-                        <span class="small d-block mb-2" style="color:var(--a-gray);font-weight:600;">Gambar struktur saat ini:</span>
-                        <img src="<?php echo base_url($profile['structure_img']); ?>" style="max-height: 80px; border-radius:var(--a-radius-sm); border:1px solid var(--a-border); box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-                    </div>
-                <?php endif; ?>
-            </div>
+
             
             <!-- PDF Document -->
             <div class="col-md-6">
