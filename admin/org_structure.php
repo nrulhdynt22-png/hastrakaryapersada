@@ -126,7 +126,7 @@ $all_ids = array_column($members, 'id');
                 <?php endif; ?>
             </div>
             <div class="admin-card-body">
-                <form action="?action=<?php echo $action; ?><?php echo $id > 0 ? '&id='.$id : ''; ?>" method="POST" enctype="multipart/form-data">
+                <form action="org_structure.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
                     <input type="hidden" name="save_org" value="1">
                     <input type="hidden" name="edit_id" value="<?php echo $edit_data ? $edit_data['id'] : ''; ?>">
@@ -210,7 +210,7 @@ $all_ids = array_column($members, 'id');
                         // Build lookup for parent name
                         $member_map = array_column($members, null, 'id');
                         foreach ($members as $m):
-                            $parent_name = $m['parent_id'] ? sanitize($member_map[$m['parent_id']]['position'] ?? '-') : '<span style="color:var(--a-gold);font-weight:700;">Teratas</span>';
+                            $parent_name = $m['parent_id'] ? sanitize($member_map[$m['parent_id']]['name'] ?? '-') . '<br><small style="color:var(--a-gray);">' . sanitize($member_map[$m['parent_id']]['position'] ?? '') . '</small>' : '<span style="color:var(--a-gold);font-weight:700;">Teratas</span>';
                         ?>
                         <tr>
                             <td>

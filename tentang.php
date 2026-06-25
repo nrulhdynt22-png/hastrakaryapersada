@@ -155,96 +155,123 @@ $raw_certs = array_filter(explode("\n", $profile['certificates'] ?? "ISO 9001:20
             $org_members = $org_stmt->fetchAll();
         } catch (Exception $e) {}
 
-        // Build map by parent_id
-        $org_map = [];
+        // Build map keyed by parent_id
+        $org_by_parent = [];
         foreach ($org_members as $om) {
-            $org_map[$om['parent_id'] ?? 'root'][] = $om;
+            $key = (isset($om['parent_id']) && $om['parent_id'] !== null && $om['parent_id'] !== '') ? (int)$om['parent_id'] : 'root';
+            $org_by_parent[$key][] = $om;
         }
 
-        // Helper to render an org card
-        function render_org_card($m, $size = 'md') {
-            $photo_url = !empty($m['photo'])
-                ? base_url('assets/uploads/org/' . $m['photo'])
-                : null;
-            $card_w = $size === 'lg' ? '180px' : ($size === 'sm' ? '140px' : '160px');
-            $img_size = $size === 'lg' ? '72px' : '56px';
-            echo "<div style='display:inline-block;background:#fff;border:2px solid #e8ecf0;border-radius:10px;padding:1rem .75rem;text-align:center;min-width:{$card_w};max-width:{$card_w};box-shadow:0 4px 20px rgba(11,31,58,.08);transition:all .3s;vertical-align:top;'
-                         onmouseover=\"this.style.borderColor='var(--gold)';this.style.boxShadow='0 8px 30px rgba(201,162,39,.2)'\"
-                         onmouseout=\"this.style.borderColor='#e8ecf0';this.style.boxShadow='0 4px 20px rgba(11,31,58,.08)'\">";
-            if ($photo_url) {
-                echo "<img src='" . htmlspecialchars($photo_url) . "' style='width:{$img_size};height:{$img_size};border-radius:50%;object-fit:cover;border:3px solid rgba(201,162,39,.4);margin-bottom:.6rem;display:block;margin-left:auto;margin-right:auto;' alt='" . htmlspecialchars($m['name']) . "'>";
-            } else {
-                echo "<div style='width:{$img_size};height:{$img_size};border-radius:50%;background:var(--grad-navy);display:flex;align-items:center;justify-content:center;margin:0 auto .6rem;border:3px solid rgba(201,162,39,.25);'><i class=\"bi-person-fill\" style='font-size:1.4rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;'></i></div>";
+        // Recursively build tree array with children
+        if (!function_exists('build_org_tree')) {
+        function build_org_tree($map, $parent_key = 'root') {
+            $nodes = $map[$parent_key] ?? [];
+            foreach ($nodes as &$node) {
+                $node['children'] = build_org_tree($map, (int)$node['id']);
             }
-            echo "<div style='font-size:.82rem;font-weight:800;color:var(--navy);line-height:1.3;margin-bottom:.25rem;'>" . htmlspecialchars($m['name']) . "</div>";
-            echo "<div style='font-size:.7rem;color:var(--gold);font-style:italic;font-weight:600;'>" . htmlspecialchars($m['position']) . "</div>";
-            echo "</div>";
+            return $nodes;
+        }
         }
 
-        // Connector line style
-        $v_line = "<div style='width:2px;height:28px;background:linear-gradient(to bottom,rgba(201,162,39,.7),rgba(201,162,39,.3));margin:0 auto;'></div>";
-        $h_connector = "<div style='width:70%;height:2px;background:rgba(201,162,39,.4);margin:0 auto;'></div>";
+        // Render a single org card
+        if (!function_exists('org_card_html')) {
+        function org_card_html($m, $level = 0) {
+            $photo_url = !empty($m['photo']) ? base_url('assets/uploads/org/' . $m['photo']) : null;
+            $img_size  = $level === 0 ? '80px' : ($level === 1 ? '64px' : '52px');
+            $card_bg   = $level === 0 ? 'linear-gradient(135deg,var(--navy) 0%,#1a3a5c 100%)' : '#fff';
+            $name_color= $level === 0 ? '#fff' : 'var(--navy)';
+            $pos_color = $level === 0 ? 'rgba(201,162,39,.9)' : 'var(--gold)';
+            $border    = $level === 0 ? '2px solid rgba(201,162,39,.4)' : '1.5px solid #e4e8ef';
+            $shadow    = $level === 0 ? '0 8px 32px rgba(11,31,58,.25)' : '0 4px 18px rgba(11,31,58,.08)';
+            $shadow_h  = $level === 0 ? '0 16px 40px rgba(11,31,58,.3)' : '0 12px 32px rgba(11,31,58,.14)';
+            $border_h  = $level === 0 ? 'rgba(201,162,39,.7)' : 'rgba(201,162,39,.5)';
+            $padding   = $level === 0 ? '1.25rem 1rem' : '1rem .875rem';
+            $min_w     = $level === 0 ? '160px' : ($level === 1 ? '145px' : '130px');
+            $font_name = $level === 0 ? '.85rem' : '.78rem';
 
-        if (!empty($org_members)):
-            $roots = $org_map['root'] ?? ($org_map[null] ?? []);
+            $html  = "<div style='display:inline-flex;flex-direction:column;align-items:center;background:{$card_bg};border:{$border};border-radius:12px;padding:{$padding};text-align:center;min-width:{$min_w};max-width:{$min_w};box-shadow:{$shadow};transition:all .3s ease;cursor:default;'";
+            $html .= " onmouseover=\"this.style.transform='translateY(-5px)';this.style.boxShadow='{$shadow_h}';this.style.borderColor='{$border_h}'\"";
+            $html .= " onmouseout=\"this.style.transform='translateY(0)';this.style.boxShadow='{$shadow}';this.style.borderColor='" . ($level === 0 ? 'rgba(201,162,39,.4)' : '#e4e8ef') . "'\">";
+
+            if ($photo_url) {
+                $html .= "<img src='" . htmlspecialchars($photo_url) . "' style='width:{$img_size};height:{$img_size};border-radius:50%;object-fit:cover;border:3px solid rgba(201,162,39,.5);margin-bottom:.6rem;flex-shrink:0;' alt='" . htmlspecialchars($m['name']) . "'>";
+            } else {
+                $avt_bg = $level === 0 ? 'rgba(255,255,255,.1)' : 'var(--grad-navy)';
+                $icon_fs = $level === 0 ? '1.8rem' : '1.3rem';
+                $html .= "<div style='width:{$img_size};height:{$img_size};border-radius:50%;background:{$avt_bg};display:flex;align-items:center;justify-content:center;margin:0 auto .6rem;border:3px solid rgba(201,162,39,.3);flex-shrink:0;'>";
+                $html .= "<i class=\"bi-person-fill\" style='font-size:{$icon_fs};background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;'></i>";
+                $html .= "</div>";
+            }
+
+            $html .= "<div style='font-size:{$font_name};font-weight:800;color:{$name_color};line-height:1.3;margin-bottom:.2rem;word-break:break-word;'>" . htmlspecialchars($m['name']) . "</div>";
+            $html .= "<div style='font-size:.67rem;color:{$pos_color};font-weight:600;line-height:1.3;font-style:italic;word-break:break-word;'>" . htmlspecialchars($m['position']) . "</div>";
+            $html .= "</div>";
+            return $html;
+        }
+        }
+
+        // Recursively render org tree as HTML
+        if (!function_exists('render_org_tree_html')) {
+        function render_org_tree_html($nodes, $level = 0) {
+            if (empty($nodes)) return '';
+            $count = count($nodes);
+            $html  = '';
+
+            // Vertical line from parent
+            $html .= "<div style='width:2px;height:24px;background:linear-gradient(to bottom,rgba(201,162,39,.7),rgba(201,162,39,.3));margin:0 auto;'></div>";
+
+            if ($count === 1) {
+                $node = $nodes[0];
+                $html .= "<div style='display:flex;flex-direction:column;align-items:center;'>";
+                $html .= org_card_html($node, $level);
+                if (!empty($node['children'])) {
+                    $html .= render_org_tree_html($node['children'], $level + 1);
+                }
+                $html .= "</div>";
+            } else {
+                // Multiple siblings — horizontal branch
+                $html .= "<div style='display:flex;flex-direction:column;align-items:center;width:100%;'>";
+                $html .= "<div style='display:flex;justify-content:center;align-items:flex-start;gap:1.25rem;flex-wrap:wrap;position:relative;'>";
+                // Top horizontal line spanning siblings
+                $html .= "<div style='position:absolute;top:0;left:8%;right:8%;height:2px;background:linear-gradient(to right,transparent,rgba(201,162,39,.5) 20%,rgba(201,162,39,.5) 80%,transparent);'></div>";
+                foreach ($nodes as $node) {
+                    $html .= "<div style='display:flex;flex-direction:column;align-items:center;margin-top:24px;'>";
+                    $html .= "<div style='width:2px;height:0;background:rgba(201,162,39,.4);'></div>";
+                    $html .= org_card_html($node, $level);
+                    if (!empty($node['children'])) {
+                        $html .= render_org_tree_html($node['children'], $level + 1);
+                    }
+                    $html .= "</div>";
+                }
+                $html .= "</div></div>";
+            }
+            return $html;
+        }
+        }
+
+        $org_tree = build_org_tree($org_by_parent);
+
+        if (!empty($org_tree)):
         ?>
-        <div style="overflow-x:auto;padding-bottom:1rem;">
-        <div style="min-width:700px;text-align:center;">
-
-        <?php foreach ($roots as $root): // Level 1: Commissioner ?>
-            <div style="display:inline-block;text-align:center;width:100%;">
-                <?php render_org_card($root, 'lg'); ?>
-            </div>
-            <?php echo $v_line; ?>
-
-            <?php
-            $level2 = $org_map[$root['id']] ?? [];
-            foreach ($level2 as $l2): // Level 2: Director
-            ?>
-            <div style="display:inline-block;text-align:center;width:100%;">
-                <?php render_org_card($l2, 'lg'); ?>
-            </div>
-            <?php echo $v_line; ?>
-
-            <?php
-            $level3 = $org_map[$l2['id']] ?? [];
-            if (!empty($level3)):
-            ?>
-            <!-- H-connector for level 3 -->
-            <?php echo $h_connector; ?>
-            <div style="display:flex;justify-content:center;align-items:flex-start;gap:1.5rem;flex-wrap:wrap;margin-bottom:0;">
-                <?php foreach ($level3 as $l3): // Level 3: Managers ?>
+        <div style="overflow-x:auto;padding-bottom:1.5rem;-webkit-overflow-scrolling:touch;">
+            <div style="min-width:600px;text-align:center;padding:1rem 2rem 2rem;">
+                <?php foreach ($org_tree as $i => $root): ?>
+                <?php if ($i > 0): ?><div style="height:2.5rem;"></div><?php endif; ?>
                 <div style="display:flex;flex-direction:column;align-items:center;">
-                    <div style="width:2px;height:20px;background:rgba(201,162,39,.4);"></div>
-                    <?php render_org_card($l3, 'md'); ?>
-
-                    <?php $level4 = $org_map[$l3['id']] ?? []; ?>
-                    <?php if (!empty($level4)): ?>
-                    <div style="width:2px;height:20px;background:rgba(201,162,39,.3);"></div>
-                    <?php if (count($level4) > 1): ?>
-                    <div style="width:80%;height:2px;background:rgba(201,162,39,.3);"></div>
-                    <?php endif; ?>
-                    <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
-                        <?php foreach ($level4 as $l4): // Level 4: Staff ?>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <div style="width:2px;height:16px;background:rgba(201,162,39,.25);"></div>
-                            <?php render_org_card($l4, 'sm'); ?>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php echo org_card_html($root, 0); ?>
+                    <?php if (!empty($root['children'])): ?>
+                    <?php echo render_org_tree_html($root['children'], 1); ?>
                     <?php endif; ?>
                 </div>
                 <?php endforeach; ?>
             </div>
-            <?php endif; ?>
-            <?php endforeach; ?>
-        <?php endforeach; ?>
-
-        </div><!-- /min-width -->
-        </div><!-- /overflow-x:auto -->
+        </div>
 
         <?php else: ?>
-        <p class="text-center text-muted">Struktur organisasi belum diatur. <a href="<?php echo base_url('admin/org_structure.php'); ?>">Atur di Admin Panel</a>.</p>
+        <p class="text-center text-muted py-4">
+            Struktur organisasi belum diatur.
+            <a href="<?php echo base_url('admin/org_structure.php'); ?>">Atur di Admin Panel</a>.
+        </p>
         <?php endif; ?>
 
     </div>
