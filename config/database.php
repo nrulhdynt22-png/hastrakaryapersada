@@ -20,9 +20,9 @@ class Database {
             // === KREDENSIAL HOSTINGER (LIVE) ===
             // Ganti 3 baris di bawah ini sesuai dengan database yang Anda buat di Hostinger!
             $this->host = "localhost"; // Di Hostinger biasanya tetap localhost
-            $this->username = "hastrakarya";    // CONTOH: ganti dengan Username Database Hostinger Anda
+            $this->username = "u151221364_hastrakarya";    // CONTOH: ganti dengan Username Database Hostinger Anda
             $this->password = "admin123!!";   // CONTOH: ganti dengan Password Database Hostinger Anda
-            $this->db_name = "u151221364_hastra";    // CONTOH: ganti dengan Nama Database Hostinger Anda
+            $this->db_name = "u151221364_hastrakarya";    // CONTOH: ganti dengan Nama Database Hostinger Anda
         }
     }
 
