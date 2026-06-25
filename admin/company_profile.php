@@ -18,53 +18,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $director_speech = sanitize($_POST['director_speech']);
         $profile_text = sanitize($_POST['profile_text']);
-        $legality = sanitize($_POST['legality']);
         $business_sectors = sanitize($_POST['business_sectors']);
         $certificates = sanitize($_POST['certificates']);
-        
-        $pdf_path_name = $profile['pdf_path'] ?? '';
         
         $upload_ok = true;
         
 
         
-        // Handle Company Profile PDF upload
-        if ($upload_ok && isset($_FILES['pdf_file']) && $_FILES['pdf_file']['error'] === UPLOAD_ERR_OK) {
-            $file_tmp = $_FILES['pdf_file']['tmp_name'];
-            $file_name = $_FILES['pdf_file']['name'];
-            $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-            
-            if ($file_ext !== 'pdf') {
-                $error_msg = 'Berkas profil perusahaan harus berformat PDF.';
-                $upload_ok = false;
-            } else {
-                $pdf_path_name = 'company_profile_' . time() . '.pdf';
-                $dest_path = __DIR__ . '/../assets/uploads/pdf/' . $pdf_path_name;
-                
-                if (move_uploaded_file($file_tmp, $dest_path)) {
-                    // Delete old PDF file if exists
-                    if (!empty($profile['pdf_path']) && file_exists(__DIR__ . '/../' . $profile['pdf_path'])) {
-                        unlink(__DIR__ . '/../' . $profile['pdf_path']);
-                    }
-                    $pdf_path_name = 'assets/uploads/pdf/' . $pdf_path_name;
-                } else {
-                    $error_msg = 'Gagal mengunggah berkas PDF ke server.';
-                    $upload_ok = false;
-                }
-            }
-        }
+
         
         if ($upload_ok) {
             try {
-                $stmt = $db->prepare("UPDATE company_profile SET director_speech = ?, profile_text = ?, legality = ?, business_sectors = ?, certificates = ?, pdf_path = ? WHERE id = 1");
+                $stmt = $db->prepare("UPDATE company_profile SET director_speech = ?, profile_text = ?, business_sectors = ?, certificates = ? WHERE id = 1");
                 $stmt->execute([
                     $director_speech,
                     $profile_text,
-                    $legality,
-
                     $business_sectors,
-                    $certificates,
-                    $pdf_path_name
+                    $certificates
                 ]);
                 $success_msg = 'Profil perusahaan berhasil diperbarui!';
                 
@@ -82,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- Header -->
 <div class="mb-4">
     <h1 class="h3 fw-bold text-primary mb-0" style="color: var(--a-navy) !important;">Edit Company Profile</h1>
-    <span class="small text-muted" style="color: var(--a-gray) !important;">Perbarui sambutan direksi, legalitas hukum, struktur organisasi, dan berkas PDF profil perusahaan.</span>
+    <span class="small text-muted" style="color: var(--a-gray) !important;">Perbarui sambutan direksi, profil perusahaan, bidang usaha, dan sertifikasi.</span>
 </div>
 
 <!-- Status Alerts -->
@@ -111,11 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <textarea class="form-control-admin" id="profile_text" name="profile_text" rows="5" required><?php echo sanitize($profile['profile_text'] ?? ''); ?></textarea>
         </div>
         
-        <!-- Legalitas -->
-        <div class="mb-4">
-            <label for="legality" class="form-label-admin">Legalitas Hukum Perusahaan (Format: Keterangan: Nilai - Pisahkan dengan baris baru)</label>
-            <textarea class="form-control-admin" id="legality" name="legality" rows="5" required><?php echo sanitize($profile['legality'] ?? ''); ?></textarea>
-        </div>
 
         <div class="row mb-4 g-4">
             <!-- Bidang Usaha -->
@@ -130,22 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
 
-        <!-- File Uploads -->
-        <div class="row mb-5 g-4">
 
-            
-            <!-- PDF Document -->
-            <div class="col-md-6">
-                <label for="pdf_file" class="form-label-admin">Berkas PDF Company Profile (Format: PDF)</label>
-                <input type="file" class="form-control-admin" style="background:#fff;" id="pdf_file" name="pdf_file" accept=".pdf">
-                <?php if (!empty($profile['pdf_path'])): ?>
-                    <div class="mt-3 text-start">
-                        <span class="small d-block mb-2" style="color:var(--a-gray);font-weight:600;">File PDF saat ini:</span>
-                        <a href="<?php echo base_url($profile['pdf_path']); ?>" target="_blank" class="btn-admin-danger"><i class="bi-file-earmark-pdf"></i> Buka PDF</a>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
         
         <div class="mt-4 pt-4 border-top" style="border-color: var(--a-border) !important;">
             <button type="submit" class="btn-admin-primary"><i class="bi-save"></i> Simpan Perubahan Profil</button>
