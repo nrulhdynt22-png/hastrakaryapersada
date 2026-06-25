@@ -48,8 +48,9 @@ try {
     <div class="navbar-wrap" id="navbarWrap">
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container-fluid px-0">
-                <a class="navbar-brand" href="<?php echo base_url(); ?>">
-                    PT. HASTRA KARYA <span>PERSADA</span>
+                <a class="navbar-brand" href="<?php echo base_url(); ?>" style="display:flex;align-items:center;gap:.65rem;">
+                    <img src="<?php echo base_url('assets/img/logo.png'); ?>" alt="Logo PT. Hastra Karya Persada" style="height:38px;width:auto;object-fit:contain;">
+                    <span style="line-height:1.15;">PT. HASTRA KARYA <span>PERSADA</span></span>
                 </a>
 
                 <button class="navbar-toggler border-0 p-0 ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-label="Toggle navigation"

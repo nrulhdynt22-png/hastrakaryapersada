@@ -34,8 +34,13 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
 
         <!-- Brand -->
         <div class="sidebar-brand">
-            <h5 class="sidebar-brand-title">PT. HASTRA KARYA <span>PERSADA</span></h5>
-            <div class="sidebar-brand-sub">CMS Admin Panel</div>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+                <img src="<?php echo base_url('assets/img/logo.png'); ?>" alt="Logo" style="height:36px;width:auto;object-fit:contain;flex-shrink:0;">
+                <div>
+                    <h5 class="sidebar-brand-title">PT. HASTRA KARYA <span>PERSADA</span></h5>
+                    <div class="sidebar-brand-sub">CMS Admin Panel</div>
+                </div>
+            </div>
         </div>
 
         <!-- User -->
