@@ -50,18 +50,18 @@
             " onmouseover="this.style.background='#F4F6FA'" onmouseout="this.style.background='transparent'">
                 Batal
             </button>
-            <a id="logoutConfirm" href="logout.php" style="
+            <button id="logoutConfirm" onclick="window.location.href='logout.php'" style="
                 flex:1;padding:.75rem;border-radius:100px;
                 background:linear-gradient(135deg,#BF953F,#FCF6BA 40%,#B38728 70%,#FBF5B7);
-                color:#06101F !important;
+                color:#06101F;
                 font-size:.9rem;font-weight:700;
-                text-decoration:none;display:flex;
+                border:none;cursor:pointer;display:flex;
                 align-items:center;justify-content:center;gap:.45rem;
                 box-shadow:0 4px 14px rgba(201,162,39,.35);
                 transition:all .3s;font-family:'Outfit',sans-serif;
             ">
                 <i class="bi-box-arrow-right"></i> Ya, Keluar
-            </a>
+            </button>
         </div>
     </div>
 </div>
