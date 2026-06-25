@@ -202,17 +202,17 @@ if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
                     <div style="position:absolute;bottom:-30px;left:-30px;background:var(--navy);border-radius:var(--radius);padding:1.75rem 2rem;box-shadow:0 20px 50px rgba(0,0,0,.25);border:1px solid rgba(201,162,39,.2);">
                         <div class="d-flex gap-4">
                             <div class="text-center">
-                                <div style="font-size:2.2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">150+</div>
+                                <div style="font-size:2.2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;"><?php echo sanitize($settings['stat_proyek'] ?? '150'); ?>+</div>
                                 <div style="color:rgba(255,255,255,.5);font-size:.75rem;letter-spacing:1px;margin-top:.25rem;">PROYEK</div>
                             </div>
                             <div style="width:1px;background:rgba(255,255,255,.08);"></div>
                             <div class="text-center">
-                                <div style="font-size:2.2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">80+</div>
+                                <div style="font-size:2.2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;"><?php echo sanitize($settings['stat_mitra'] ?? '80'); ?>+</div>
                                 <div style="color:rgba(255,255,255,.5);font-size:.75rem;letter-spacing:1px;margin-top:.25rem;">KLIEN</div>
                             </div>
                             <div style="width:1px;background:rgba(255,255,255,.08);"></div>
                             <div class="text-center">
-                                <div style="font-size:2.2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">99%</div>
+                                <div style="font-size:2.2rem;font-weight:900;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;"><?php echo sanitize($settings['stat_kepuasan'] ?? '99'); ?>%</div>
                                 <div style="color:rgba(255,255,255,.5);font-size:.75rem;letter-spacing:1px;margin-top:.25rem;">PUAS</div>
                             </div>
                         </div>
