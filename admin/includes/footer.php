@@ -79,17 +79,20 @@ document.querySelectorAll('a[href="logout.php"]').forEach(function(el) {
     el.removeAttribute('onclick');
     el.addEventListener('click', function(e) {
         e.preventDefault();
-        var modal = document.getElementById('logoutModal');
-        modal.style.display = 'flex';
+        document.getElementById('logoutModal').style.display = 'flex';
     });
 });
 // Cancel button
 document.getElementById('logoutCancel').addEventListener('click', function() {
     document.getElementById('logoutModal').style.display = 'none';
 });
-// Close on backdrop click
-document.getElementById('logoutModal').addEventListener('click', function(e) {
-    if (e.target === this) this.style.display = 'none';
+// Stop click propagation inside the modal card (so inner clicks don't close modal)
+document.querySelector('#logoutModal > div').addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+// Close only when clicking the dark backdrop
+document.getElementById('logoutModal').addEventListener('click', function() {
+    this.style.display = 'none';
 });
 // Close on Escape key
 document.addEventListener('keydown', function(e) {
