@@ -292,21 +292,21 @@ if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
 ============================================================ -->
 <section class="counter-section">
     <div class="container">
-        <div class="row align-items-center justify-content-center g-4 text-center counter-row">
+        <div class="row align-items-center justify-content-center g-4 text-center">
             <div class="col-lg-3 col-6">
-                <div class="counter-box">
+                <div class="counter-box" style="border-right: 1px solid rgba(255,255,255,0.1);">
                     <h3><span class="counter-value" data-target="<?php echo sanitize($settings['stat_proyek'] ?? '150'); ?>">0</span>+</h3>
                     <p>Proyek Selesai</p>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
-                <div class="counter-box">
+                <div class="counter-box" style="border-right: 1px solid rgba(255,255,255,0.1);">
                     <h3><span class="counter-value" data-target="<?php echo sanitize($settings['stat_mitra'] ?? '80'); ?>">0</span>+</h3>
                     <p>Mitra &amp; Klien</p>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
-                <div class="counter-box">
+                <div class="counter-box" style="border-right: 1px solid rgba(255,255,255,0.1);">
                     <h3><span class="counter-value" data-target="<?php echo sanitize($settings['stat_pengalaman'] ?? '15'); ?>">0</span>+</h3>
                     <p>Tahun Pengalaman</p>
                 </div>
@@ -338,7 +338,7 @@ if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
             </div>
         </div>
 
-        <div class="row g-4 justify-content-center portfolio-scroll-row">
+        <div class="row g-4 justify-content-center">
             <?php foreach ($portfolios as $i => $p):
                 $pimg = !empty($p['image']) && file_exists(__DIR__.'/assets/uploads/portfolio/'.$p['image'])
                     ? base_url('assets/uploads/portfolio/'.$p['image'])
