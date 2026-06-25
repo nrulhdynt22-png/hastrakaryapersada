@@ -13,9 +13,7 @@ $page_titles = [
     'company_profile.php' => ['Kelola Tentang',      'Perbarui profil korporat dan teks sambutan.'],
     'org_structure.php'   => ['Struktur Organisasi', 'Kelola hierarki dan foto anggota struktur perusahaan.'],
     'advantages.php'      => ['Kelola Keunggulan',   'Tambah, ubah, dan hapus keunggulan perusahaan di homepage.'],
-    'articles.php'        => ['Berita & Artikel',    'Kelola publikasi berita perusahaan.'],
-    'gallery.php'         => ['Galeri Foto',         'Kelola dokumentasi gambar dan kegiatan.'],
-    'careers.php'         => ['Lowongan Karir',      'Kelola informasi lowongan pekerjaan.'],
+
     'settings.php'        => ['Pengaturan Situs',    'Konfigurasi kontak, SEO, media sosial, dan statistik.'],
 ];
 $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Persada'];
@@ -84,18 +82,7 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
             <a class="sidebar-link <?php echo ($admin_current_page === 'advantages.php') ? 'active' : ''; ?>" href="advantages.php">
                 <i class="bi-stars"></i><span>Keunggulan</span>
             </a>
-            
-            <div class="sidebar-section-label">Publikasi & Media</div>
 
-            <a class="sidebar-link <?php echo ($admin_current_page === 'articles.php') ? 'active' : ''; ?>" href="articles.php">
-                <i class="bi-newspaper"></i><span>Berita & Artikel</span>
-            </a>
-            <a class="sidebar-link <?php echo ($admin_current_page === 'gallery.php') ? 'active' : ''; ?>" href="gallery.php">
-                <i class="bi-images"></i><span>Galeri Foto</span>
-            </a>
-            <a class="sidebar-link <?php echo ($admin_current_page === 'careers.php') ? 'active' : ''; ?>" href="careers.php">
-                <i class="bi-person-workspace"></i><span>Lowongan Karir</span>
-            </a>
 
             <div class="sidebar-section-label">Sistem</div>
 
