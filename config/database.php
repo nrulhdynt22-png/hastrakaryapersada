@@ -181,6 +181,14 @@ class Database {
                 `sort_order` INT NOT NULL DEFAULT 0,
                 FOREIGN KEY (`parent_id`) REFERENCES `org_structure`(`id`) ON DELETE SET NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `advantages` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `icon` VARCHAR(50) NOT NULL DEFAULT 'bi-star',
+                `title` VARCHAR(150) NOT NULL,
+                `description` TEXT NOT NULL,
+                `sort_order` INT NOT NULL DEFAULT 0
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
             ";
 
             $this->conn->exec($sql);
@@ -328,6 +336,12 @@ class Database {
             $stmtOrg->execute([10, 'Ir. Sakaruddin', 'Support Engineer', 7, 1]);
             $stmtOrg->execute([11, 'Nurul Fathana, A.Md.T', 'CAD Drafter', 8, 2]);
 
+            // Seed advantages
+            $stmtAdv = $this->conn->prepare("INSERT INTO `advantages` (icon, title, description, sort_order) VALUES (?, ?, ?, ?)");
+            $stmtAdv->execute(['bi-shield-check', 'Profesional Tersertifikasi', 'Seluruh tim kami memegang sertifikasi resmi — dari SKA, SMK3, hingga ISO internasional.', 1]);
+            $stmtAdv->execute(['bi-graph-up-arrow', 'Rekam Jejak Terbukti', 'Lebih dari 150 proyek sukses diselesaikan tepat waktu dengan tingkat kepuasan 99%.', 2]);
+            $stmtAdv->execute(['bi-gem', 'Standar Mutu Global', 'Material SNI, prosedur kerja ISO, dan pengawasan kualitas berlapis di setiap tahap.', 3]);
+            $stmtAdv->execute(['bi-clock-history', 'Zero Delay Delivery', 'Manajemen proyek berbasis teknologi untuk memastikan tidak ada keterlambatan jadwal.', 4]);
 
             // Seed initial articles
             $stmtArticle = $this->conn->prepare("INSERT INTO `articles` (title, slug, content, image, tags, author, status) VALUES (?, ?, ?, ?, ?, ?, 'published')");

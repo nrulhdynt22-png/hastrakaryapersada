@@ -43,6 +43,27 @@ try {
     $portfolios = $stmt->fetchAll();
 } catch (Exception $e) {}
 
+// Fetch advantages
+$advantages = [];
+try {
+    $db->exec("CREATE TABLE IF NOT EXISTS `advantages` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `icon` VARCHAR(50) NOT NULL DEFAULT 'bi-star',
+        `title` VARCHAR(150) NOT NULL,
+        `description` TEXT NOT NULL,
+        `sort_order` INT NOT NULL DEFAULT 0
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    $advantages = $db->query("SELECT * FROM advantages ORDER BY sort_order ASC, id ASC LIMIT 4")->fetchAll();
+} catch (Exception $e) {}
+if (empty($advantages)) {
+    $advantages = [
+        ['icon'=>'bi-shield-check','title'=>'Profesional Tersertifikasi','description'=>'Seluruh tim kami memegang sertifikasi resmi — dari SKA, SMK3, hingga ISO internasional.'],
+        ['icon'=>'bi-graph-up-arrow','title'=>'Rekam Jejak Terbukti','description'=>'Lebih dari 150 proyek sukses diselesaikan tepat waktu dengan tingkat kepuasan 99%.'],
+        ['icon'=>'bi-gem','title'=>'Standar Mutu Global','description'=>'Material SNI, prosedur kerja ISO, dan pengawasan kualitas berlapis di setiap tahap.'],
+        ['icon'=>'bi-clock-history','title'=>'Zero Delay Delivery','description'=>'Manajemen proyek berbasis teknologi untuk memastikan tidak ada keterlambatan jadwal.'],
+    ];
+}
+
 // Fallback images
 $hero_imgs = [
     "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80",
@@ -223,26 +244,15 @@ if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
             </div>
             <div class="col-lg-8">
                 <div class="advantage-grid">
-                    <div class="advantage-card reveal" style="transition-delay:.1s">
-                        <div style="font-size:1.8rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;"><i class="bi-shield-check"></i></div>
-                        <h5 class="mb-2">Profesional Tersertifikasi</h5>
-                        <p class="small mb-0">Seluruh tim kami memegang sertifikasi resmi — dari SKA, SMK3, hingga ISO internasional.</p>
+                    <?php foreach (array_slice($advantages, 0, 4) as $i => $adv): ?>
+                    <div class="advantage-card reveal" style="transition-delay:<?php echo ($i+1)*0.1; ?>s">
+                        <div style="font-size:1.8rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;">
+                            <i class="bi <?php echo sanitize($adv['icon']); ?>"></i>
+                        </div>
+                        <h5 class="mb-2"><?php echo sanitize($adv['title']); ?></h5>
+                        <p class="small mb-0"><?php echo sanitize($adv['description']); ?></p>
                     </div>
-                    <div class="advantage-card reveal" style="transition-delay:.2s">
-                        <div style="font-size:1.8rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;"><i class="bi-graph-up-arrow"></i></div>
-                        <h5 class="mb-2">Rekam Jejak Terbukti</h5>
-                        <p class="small mb-0">Lebih dari 150 proyek sukses diselesaikan tepat waktu dengan tingkat kepuasan 99%.</p>
-                    </div>
-                    <div class="advantage-card reveal" style="transition-delay:.3s">
-                        <div style="font-size:1.8rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;"><i class="bi-gem"></i></div>
-                        <h5 class="mb-2">Standar Mutu Global</h5>
-                        <p class="small mb-0">Material SNI, prosedur kerja ISO, dan pengawasan kualitas berlapis di setiap tahap.</p>
-                    </div>
-                    <div class="advantage-card reveal" style="transition-delay:.4s">
-                        <div style="font-size:1.8rem;background:var(--grad-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;"><i class="bi-clock-history"></i></div>
-                        <h5 class="mb-2">Zero Delay Delivery</h5>
-                        <p class="small mb-0">Manajemen proyek berbasis teknologi untuk memastikan tidak ada keterlambatan jadwal.</p>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
