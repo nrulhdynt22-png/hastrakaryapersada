@@ -55,9 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
     <div class="login-card-admin">
 
-        <!-- Logo icon -->
-        <div class="login-icon-wrap">
-            <i class="bi-shield-lock-fill"></i>
+        <!-- Logo -->
+        <div style="text-align:center;margin-bottom:1.5rem;">
+            <img src="<?php echo base_url('assets/img/logo.png'); ?>" alt="Logo PT. Hastra Karya Persada" style="height:72px;width:auto;object-fit:contain;">
         </div>
 
         <!-- Brand name -->
