@@ -1,10 +1,30 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $db_name = "db_hastra_karya";
+    private $host;
+    private $username;
+    private $password;
+    private $db_name;
     public $conn = null;
+
+    public function __construct() {
+        // Otomatis mendeteksi apakah berjalan di komputer lokal (XAMPP) atau di Hostinger
+        $is_localhost = in_array($_SERVER['HTTP_HOST'] ?? '', ['localhost', 'localhost:8000', '127.0.0.1']);
+        
+        if ($is_localhost) {
+            // === KREDENSIAL LOKAL (XAMPP) ===
+            $this->host = "localhost";
+            $this->username = "root";
+            $this->password = "";
+            $this->db_name = "db_hastra_karya";
+        } else {
+            // === KREDENSIAL HOSTINGER (LIVE) ===
+            // Ganti 3 baris di bawah ini sesuai dengan database yang Anda buat di Hostinger!
+            $this->host = "localhost"; // Di Hostinger biasanya tetap localhost
+            $this->username = "hastrakarya";    // CONTOH: ganti dengan Username Database Hostinger Anda
+            $this->password = "admin123!!";   // CONTOH: ganti dengan Password Database Hostinger Anda
+            $this->db_name = "u151221364_hastra";    // CONTOH: ganti dengan Nama Database Hostinger Anda
+        }
+    }
 
     public function getConnection() {
         if ($this->conn !== null) {
