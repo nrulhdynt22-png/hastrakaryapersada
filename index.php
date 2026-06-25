@@ -292,28 +292,25 @@ if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
 ============================================================ -->
 <section class="counter-section">
     <div class="container">
-        <div class="row align-items-center g-4">
+        <div class="row align-items-center justify-content-center g-4 text-center">
             <div class="col-lg-3 col-6">
-                <div class="counter-box">
+                <div class="counter-box" style="border-right: 1px solid rgba(255,255,255,0.1);">
                     <h3><span class="counter-value" data-target="<?php echo sanitize($settings['stat_proyek'] ?? '150'); ?>">0</span>+</h3>
                     <p>Proyek Selesai</p>
                 </div>
             </div>
-            <div class="counter-sep d-none d-lg-block" style="height:80px;"></div>
             <div class="col-lg-3 col-6">
-                <div class="counter-box">
+                <div class="counter-box" style="border-right: 1px solid rgba(255,255,255,0.1);">
                     <h3><span class="counter-value" data-target="<?php echo sanitize($settings['stat_mitra'] ?? '80'); ?>">0</span>+</h3>
                     <p>Mitra &amp; Klien</p>
                 </div>
             </div>
-            <div class="counter-sep d-none d-lg-block" style="height:80px;"></div>
             <div class="col-lg-3 col-6">
-                <div class="counter-box">
+                <div class="counter-box" style="border-right: 1px solid rgba(255,255,255,0.1);">
                     <h3><span class="counter-value" data-target="<?php echo sanitize($settings['stat_pengalaman'] ?? '15'); ?>">0</span>+</h3>
                     <p>Tahun Pengalaman</p>
                 </div>
             </div>
-            <div class="counter-sep d-none d-lg-block" style="height:80px;"></div>
             <div class="col-lg-3 col-6">
                 <div class="counter-box">
                     <h3><span class="counter-value" data-target="<?php echo sanitize($settings['stat_kepuasan'] ?? '99'); ?>">0</span>%</h3>
@@ -341,18 +338,16 @@ if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
             </div>
         </div>
 
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
             <?php foreach ($portfolios as $i => $p):
                 $pimg = !empty($p['image']) && file_exists(__DIR__.'/assets/uploads/portfolio/'.$p['image'])
                     ? base_url('assets/uploads/portfolio/'.$p['image'])
                     : ($port_imgs[$p['slug']] ?? array_values($port_imgs)[0]);
-                // First card is taller (visually dominant)
-                $h = ($i === 0) ? '420px' : '280px';
             ?>
-            <div class="col-lg-<?php echo $i === 0 ? '8' : '4'; ?> col-md-6 reveal" style="transition-delay:<?php echo $i * 0.15; ?>s">
+            <div class="col-lg-4 col-md-6 reveal" style="transition-delay:<?php echo $i * 0.15; ?>s">
                 <a href="<?php echo base_url('portofolio/'.$p['slug']); ?>" class="text-decoration-none d-block">
                     <div class="portfolio-item">
-                        <img src="<?php echo $pimg; ?>" class="portfolio-img" alt="<?php echo sanitize($p['title']); ?>" style="height:<?php echo $h; ?>">
+                        <img src="<?php echo $pimg; ?>" class="portfolio-img" alt="<?php echo sanitize($p['title']); ?>" style="height:320px;object-fit:cover;">
                         <div class="portfolio-overlay">
                             <span class="portfolio-category"><?php echo sanitize($p['category']); ?></span>
                             <h4 class="portfolio-title"><?php echo sanitize($p['title']); ?></h4>

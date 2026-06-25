@@ -9,11 +9,9 @@ $page_titles = [
     'index.php'           => ['Dashboard',          'Ringkasan aktivitas dan statistik konten.'],
     'sliders.php'         => ['Slider Beranda',      'Kelola banner slide pada halaman utama.'],
     'services.php'        => ['Kelola Layanan',      'Tambah, ubah, dan hapus layanan perusahaan.'],
-    'portfolio.php'       => ['Portofolio Proyek',   'Manajemen data rekam jejak proyek konstruksi.'],
-    'articles.php'        => ['Berita & Artikel',    'Publikasi dan kelola konten berita korporat.'],
-    'gallery.php'         => ['Galeri Foto',         'Unggah dan atur foto dokumentasi kegiatan.'],
-    'careers.php'         => ['Karir & Lowongan',    'Kelola posisi lowongan dan pelamar kerja.'],
-    'company_profile.php' => ['Company Profile',     'Perbarui profil korporat dan teks sambutan.'],
+    'portfolio.php'       => ['Kelola Proyek',       'Manajemen data rekam jejak proyek konstruksi.'],
+    'company_profile.php' => ['Kelola Tentang',      'Perbarui profil korporat dan teks sambutan.'],
+    'org_structure.php'   => ['Struktur Organisasi', 'Kelola hierarki dan foto anggota struktur perusahaan.'],
     'settings.php'        => ['Pengaturan Situs',    'Konfigurasi kontak, SEO, media sosial, dan statistik.'],
 ];
 $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Persada'];
@@ -66,19 +64,13 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
                 <i class="bi-gear-wide-connected"></i><span>Kelola Layanan</span>
             </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'portfolio.php') ? 'active' : ''; ?>" href="portfolio.php">
-                <i class="bi-building"></i><span>Portofolio Proyek</span>
-            </a>
-            <a class="sidebar-link <?php echo ($admin_current_page === 'articles.php') ? 'active' : ''; ?>" href="articles.php">
-                <i class="bi-newspaper"></i><span>Berita &amp; Artikel</span>
-            </a>
-            <a class="sidebar-link <?php echo ($admin_current_page === 'gallery.php') ? 'active' : ''; ?>" href="gallery.php">
-                <i class="bi-camera-fill"></i><span>Galeri Foto</span>
-            </a>
-            <a class="sidebar-link <?php echo ($admin_current_page === 'careers.php') ? 'active' : ''; ?>" href="careers.php">
-                <i class="bi-people-fill"></i><span>Karir &amp; Lowongan</span>
+                <i class="bi-building"></i><span>Kelola Proyek</span>
             </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'company_profile.php') ? 'active' : ''; ?>" href="company_profile.php">
-                <i class="bi-file-earmark-person-fill"></i><span>Company Profile</span>
+                <i class="bi-file-earmark-person-fill"></i><span>Kelola Tentang</span>
+            </a>
+            <a class="sidebar-link <?php echo ($admin_current_page === 'org_structure.php') ? 'active' : ''; ?>" href="org_structure.php">
+                <i class="bi-diagram-3-fill"></i><span>Struktur Organisasi</span>
             </a>
 
             <div class="sidebar-section-label">Sistem</div>

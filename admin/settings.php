@@ -123,9 +123,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                         <textarea class="form-control-admin" id="address" name="address" rows="2" required><?php echo sanitize($settings['address'] ?? ''); ?></textarea>
                     </div>
                     <div class="col-12">
-                        <label for="google_maps" class="form-label-admin">Embed Code Google Maps Iframe</label>
+                        <label for="google_maps" class="form-label-admin">Tautan atau Embed Code Google Maps</label>
                         <textarea class="form-control-admin" id="google_maps" name="google_maps" rows="4"><?php echo $settings['google_maps']; ?></textarea>
-                        <span class="text-muted d-block mt-1" style="font-size: 0.75rem;">Salin kode sematan (embed) dari Google Maps untuk memperbarui tampilan peta di halaman Hubungi Kami.</span>
+                        <span class="text-muted d-block mt-1" style="font-size: 0.75rem;">Anda bisa menempelkan (paste) tautan (link) URL Google Maps biasa, atau kode sematan (embed iframe) dari Google Maps.</span>
                     </div>
                 </div>
             </div>

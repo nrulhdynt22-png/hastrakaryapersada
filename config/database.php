@@ -151,6 +151,16 @@ class Database {
                 `certificates` TEXT NOT NULL,
                 `pdf_path` VARCHAR(255) NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `org_structure` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `name` VARCHAR(150) NOT NULL,
+                `position` VARCHAR(150) NOT NULL,
+                `parent_id` INT NULL DEFAULT NULL,
+                `photo` VARCHAR(255) NULL DEFAULT NULL,
+                `sort_order` INT NOT NULL DEFAULT 0,
+                FOREIGN KEY (`parent_id`) REFERENCES `org_structure`(`id`) ON DELETE SET NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
             ";
 
             $this->conn->exec($sql);
@@ -278,6 +288,26 @@ class Database {
                 "1. Konstruksi Bangunan Sipil (Gedung, Jalan, Jembatan)\n2. Pengadaan Barang Umum dan Peralatan Industri / IT\n3. Jasa Konsultansi Manajemen Proyek & Teknik Sipil",
                 "ISO 9001:2015 (Sistem Manajemen Mutu)\nISO 14001:2015 (Sistem Manajemen Lingkungan)\nISO 45001:2018 (Sistem Manajemen K3)\nSertifikasi SMK3 Kementerian Ketenagakerjaan RI"
             ]);
+
+            // Seed org_structure (sesuai gambar struktur organisasi)
+            $stmtOrg = $this->conn->prepare("INSERT INTO `org_structure` (id, name, position, parent_id, sort_order) VALUES (?, ?, ?, ?, ?)");
+            // Level 1 - Commissioner
+            $stmtOrg->execute([1, 'Muhammad Shadra Ali', 'Commissioner', null, 1]);
+            // Level 2 - Director
+            $stmtOrg->execute([2, 'Muhammad Akib, ST', 'Director', 1, 1]);
+            // Level 3 - Managers (parent: Director id=2)
+            $stmtOrg->execute([3, 'Ar. Marwan M., S.T., M.Sc., IAI', 'Operations Manager', 2, 1]);
+            $stmtOrg->execute([4, 'M. Risnandar, ST', 'Engineering Manager', 2, 2]);
+            $stmtOrg->execute([5, 'Mesrawati, A.Md', 'Finance Manager', 2, 3]);
+            $stmtOrg->execute([6, 'Patria Muhammad', 'HSE Manager', 2, 4]);
+            // Level 4 - Staff (parent: Engineering Manager id=4)
+            $stmtOrg->execute([7, 'Ichsan Radjab, ST', 'Mechanical Engineer', 4, 1]);
+            $stmtOrg->execute([8, 'Saiful Hayadi, S.ST', 'BIM Engineer', 4, 2]);
+            $stmtOrg->execute([9, 'Nila Angelia H., S.Psi', 'Administration & Personnel', 5, 3]);
+            // Level 5 - Junior staff (parent: Mechanical id=7 and BIM id=8)
+            $stmtOrg->execute([10, 'Ir. Sakaruddin', 'Support Engineer', 7, 1]);
+            $stmtOrg->execute([11, 'Nurul Fathana, A.Md.T', 'CAD Drafter', 8, 2]);
+
 
             // Seed initial articles
             $stmtArticle = $this->conn->prepare("INSERT INTO `articles` (title, slug, content, image, tags, author, status) VALUES (?, ?, ?, ?, ?, ?, 'published')");

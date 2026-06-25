@@ -164,8 +164,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_message'])) {
                     <h3 class="fw-bold text-navy mb-2">Lokasi Kantor Pusat</h3>
                     <div class="mx-auto bg-gold" style="width: 50px; height: 3px;"></div>
                 </div>
-                <div class="map-container">
-                    <?php echo $settings['google_maps']; ?>
+                <div class="map-container" style="text-align: center;">
+                    <?php if (strpos(trim($settings['google_maps']), '<iframe') === 0): ?>
+                        <?php echo $settings['google_maps']; ?>
+                    <?php elseif (filter_var(trim($settings['google_maps']), FILTER_VALIDATE_URL)): ?>
+                        <div style="padding: 3rem 0; background: rgba(0,0,0,0.03); border-radius: 12px; border: 1px dashed rgba(0,0,0,0.1);">
+                            <i class="bi-geo-alt-fill text-navy mb-3" style="font-size: 2.5rem; display: block;"></i>
+                            <a href="<?php echo sanitize(trim($settings['google_maps'])); ?>" target="_blank" class="btn-gold" style="display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2rem;font-size:1.1rem;text-decoration:none;">
+                                Buka Lokasi di Google Maps
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <?php echo $settings['google_maps']; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endif; ?>
