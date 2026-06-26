@@ -37,6 +37,25 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     }
 }
 
+// --- HANDLE DELETE PHOTO ---
+if (isset($_GET['delete_photo']) && is_numeric($_GET['delete_photo'])) {
+    $del_id = (int)$_GET['delete_photo'];
+    try {
+        $row = $db->query("SELECT photo FROM org_structure WHERE id = $del_id")->fetch();
+        if ($row && !empty($row['photo']) && file_exists($upload_dir . $row['photo'])) {
+            unlink($upload_dir . $row['photo']);
+        }
+        $db->prepare("UPDATE org_structure SET photo = NULL WHERE id = ?")->execute([$del_id]);
+        header("Location: org_structure.php?edit=" . $del_id . "&msg=photo_deleted");
+        exit;
+    } catch (Exception $e) {
+        $error_msg = 'Gagal menghapus foto: ' . $e->getMessage();
+    }
+}
+if (isset($_GET['msg']) && $_GET['msg'] === 'photo_deleted') {
+    $success_msg = 'Foto berhasil dihapus.';
+}
+
 // --- HANDLE EDIT FETCH ---
 if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
     $edit_data = $db->query("SELECT * FROM org_structure WHERE id = " . (int)$_GET['edit'])->fetch();
@@ -164,10 +183,16 @@ $all_ids = array_column($members, 'id');
                     <div class="mb-4">
                         <label class="form-label-admin">Foto (JPG/PNG/WEBP, maks. 2MB)</label>
                         <?php if (!empty($edit_data['photo'])): ?>
-                        <div class="mb-2">
-                            <img src="<?php echo base_url('assets/uploads/org/' . $edit_data['photo']); ?>"
-                                 style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(201,162,39,.4);" alt="Foto">
-                            <div class="text-muted" style="font-size:.72rem;margin-top:.25rem;">Foto saat ini. Upload baru untuk mengganti.</div>
+                        <div class="mb-2 d-flex align-items-end gap-3">
+                            <div>
+                                <img src="<?php echo base_url('assets/uploads/org/' . $edit_data['photo']); ?>"
+                                     style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(201,162,39,.4);" alt="Foto">
+                            </div>
+                            <div>
+                                <a href="org_structure.php?delete_photo=<?php echo $edit_data['id']; ?>" class="btn btn-sm btn-outline-danger" style="border-radius:100px;font-size:0.75rem;" onclick="return confirm('Yakin ingin menghapus foto ini?');">
+                                    <i class="bi-trash"></i> Hapus Foto
+                                </a>
+                            </div>
                         </div>
                         <?php endif; ?>
                         <input type="file" class="form-control-admin" name="photo" accept="image/jpeg,image/png,image/webp">
