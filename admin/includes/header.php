@@ -12,6 +12,7 @@ $page_titles = [
     'company_profile.php' => ['Tentang',               'Perbarui visi, misi, nilai, dan profil korporat.'],
     'org_structure.php'   => ['Struktur Organisasi',    'Kelola hierarki jabatan dan foto anggota perusahaan.'],
     'advantages.php'      => ['Home (Keunggulan)',      'Tambah, ubah, dan hapus keunggulan yang tampil di homepage.'],
+    'partners.php'        => ['Home (Mitra)',           'Kelola nama mitra atau klien yang ditampilkan di homepage.'],
     'settings.php'        => ['Kontak & Pengaturan',    'Konfigurasi kontak, SEO, media sosial, dan statistik.'],
 ];
 $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Persada'];
@@ -80,7 +81,9 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
             <a class="sidebar-link <?php echo ($admin_current_page === 'advantages.php') ? 'active' : ''; ?>" href="advantages.php">
                 <i class="bi-stars"></i><span>Home (Keunggulan)</span>
             </a>
-
+            <a class="sidebar-link <?php echo ($admin_current_page === 'partners.php') ? 'active' : ''; ?>" href="partners.php">
+                <i class="bi-people-fill"></i><span>Home (Mitra)</span>
+            </a>
 
             <div class="sidebar-section-label">Sistem</div>
 

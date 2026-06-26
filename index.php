@@ -377,20 +377,27 @@ if (slides.length > 1) {
 <section style="background:var(--off-white);padding:3rem 0;border-top:1px solid rgba(11,31,58,.05);border-bottom:1px solid rgba(11,31,58,.05);">
     <div class="container">
         <p class="text-center mb-4 reveal" style="font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--gray-text);font-weight:700;">Dipercaya oleh</p>
-        <div class="row align-items-center justify-content-center g-4 text-center reveal">
+        <div class="d-flex flex-wrap justify-content-center gap-3 gap-md-4 reveal">
             <?php
-            $partners = [
-                ['icon'=>'bi-building-fill', 'name'=>'BUMN RI'],
-                ['icon'=>'bi-shield-check',  'name'=>'Adhi Karya'],
-                ['icon'=>'bi-box-seam',      'name'=>'Waskita'],
-                ['icon'=>'bi-gear-wide',     'name'=>'Hastra GP'],
-                ['icon'=>'bi-house-check',   'name'=>'Wijaya Karya'],
-            ];
+            $partners = [];
+            try {
+                $partners = $db->query("SELECT * FROM partners ORDER BY sort_order ASC, id ASC")->fetchAll();
+            } catch(Exception $e) {}
+            
+            if (empty($partners)) {
+                $partners = [
+                    ['icon'=>'bi-building-fill', 'name'=>'BUMN RI'],
+                    ['icon'=>'bi-shield-check',  'name'=>'Adhi Karya'],
+                    ['icon'=>'bi-box-seam',      'name'=>'Waskita'],
+                    ['icon'=>'bi-gear-wide',     'name'=>'Hastra GP'],
+                    ['icon'=>'bi-house-check',   'name'=>'Wijaya Karya'],
+                ];
+            }
             foreach ($partners as $p): ?>
-            <div class="col-4 col-md-2">
-                <div style="padding:1.25rem .75rem;border-radius:var(--radius-sm);background:var(--white);border:1px solid rgba(11,31,58,.06);transition:all .3s;box-shadow:var(--shadow-card);" onmouseover="this.style.borderColor='rgba(201,162,39,.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(11,31,58,.06)';this.style.transform='translateY(0)'">
-                    <i class="bi <?php echo $p['icon']; ?>" style="font-size:1.5rem;color:var(--navy);display:block;margin-bottom:.5rem;"></i>
-                    <div style="font-size:.75rem;font-weight:700;color:var(--navy);letter-spacing:.5px;"><?php echo $p['name']; ?></div>
+            <div style="flex: 0 0 auto; width: 150px; max-width: 45%;">
+                <div style="padding:1.5rem 1rem; border-radius:var(--radius); background:var(--white); border:1px solid rgba(11,31,58,.06); transition:all .4s ease; box-shadow:0 10px 30px rgba(11,31,58,.03); display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; cursor:default;" onmouseover="this.style.borderColor='rgba(201,162,39,.4)';this.style.transform='translateY(-5px)';this.style.boxShadow='0 15px 35px rgba(201,162,39,.1)';" onmouseout="this.style.borderColor='rgba(11,31,58,.06)';this.style.transform='translateY(0)';this.style.boxShadow='0 10px 30px rgba(11,31,58,.03)';">
+                    <i class="bi <?php echo sanitize($p['icon']); ?>" style="font-size:2rem; color:var(--navy); display:block; margin-bottom:.8rem; transition:color .3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--navy)'"></i>
+                    <div style="font-size:.85rem; font-weight:800; color:var(--navy); letter-spacing:.5px; text-align:center; line-height:1.3;"><?php echo sanitize($p['name']); ?></div>
                 </div>
             </div>
             <?php endforeach; ?>
