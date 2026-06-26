@@ -67,9 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 
 <!-- Tabs Navigation -->
 <div class="admin-tabs mb-4" id="settingsTab" role="tablist">
-    <button class="admin-tab active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">Info Umum & SEO</button>
-    <button class="admin-tab" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Kontak & Lokasi</button>
+    <button class="admin-tab active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">Info Umum &amp; SEO</button>
+    <button class="admin-tab" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Kontak &amp; Lokasi</button>
     <button class="admin-tab" id="social-tab" data-bs-toggle="tab" data-bs-target="#social" type="button" role="tab" aria-controls="social" aria-selected="false">Media Sosial</button>
+    <button class="admin-tab" id="smtp-tab" data-bs-toggle="tab" data-bs-target="#smtp" type="button" role="tab" aria-controls="smtp" aria-selected="false">⚙️ Pengaturan Email (SMTP)</button>
 </div>
 
 <div class="admin-card mb-5">
@@ -197,6 +198,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                     <div class="col-md-6">
                         <label for="social_linkedin" class="form-label-admin">Tautan URL LinkedIn</label>
                         <input type="url" class="form-control-admin" id="social_linkedin" name="social_linkedin" value="<?php echo sanitize($settings['social_linkedin'] ?? ''); ?>" placeholder="https://linkedin.com/company">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 4: SMTP Email Settings -->
+            <div class="tab-pane fade" id="smtp" role="tabpanel" aria-labelledby="smtp-tab">
+                <div class="mb-4 p-3 rounded" style="background:rgba(212,167,78,.08);border:1px solid rgba(212,167,78,.3);">
+                    <p class="mb-1 small fw-bold" style="color:var(--a-navy);"><i class="bi-info-circle-fill me-2" style="color:var(--a-gold);"></i>Cara mendapatkan kredensial SMTP Hostinger:</p>
+                    <ol class="mb-0 small text-muted ps-3">
+                        <li>Login ke <strong>hPanel Hostinger</strong> → <strong>Email</strong> → <strong>Akun Email</strong></li>
+                        <li>Buat atau gunakan email <code>info@hastrakaryapersada.com</code></li>
+                        <li>SMTP Host: <code>smtp.hostinger.com</code> | Port: <code>587</code> | Enkripsi: <code>tls</code></li>
+                        <li>Username = alamat email lengkap, Password = password email tersebut</li>
+                    </ol>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label for="smtp_host" class="form-label-admin">SMTP Host</label>
+                        <input type="text" class="form-control-admin" id="smtp_host" name="smtp_host"
+                               value="<?php echo sanitize($settings['smtp_host'] ?? 'smtp.hostinger.com'); ?>"
+                               placeholder="smtp.hostinger.com">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="smtp_port" class="form-label-admin">SMTP Port</label>
+                        <input type="number" class="form-control-admin" id="smtp_port" name="smtp_port"
+                               value="<?php echo sanitize($settings['smtp_port'] ?? '587'); ?>"
+                               placeholder="587">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="smtp_encryption" class="form-label-admin">Enkripsi</label>
+                        <select class="form-control-admin" id="smtp_encryption" name="smtp_encryption">
+                            <option value="tls" <?php echo ($settings['smtp_encryption'] ?? 'tls') === 'tls' ? 'selected' : ''; ?>>TLS (Port 587) — Disarankan</option>
+                            <option value="ssl" <?php echo ($settings['smtp_encryption'] ?? '') === 'ssl' ? 'selected' : ''; ?>>SSL (Port 465)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="smtp_username" class="form-label-admin">SMTP Username (Alamat Email Pengirim)</label>
+                        <input type="email" class="form-control-admin" id="smtp_username" name="smtp_username"
+                               value="<?php echo sanitize($settings['smtp_username'] ?? ''); ?>"
+                               placeholder="info@hastrakaryapersada.com">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="smtp_password" class="form-label-admin">SMTP Password</label>
+                        <input type="password" class="form-control-admin" id="smtp_password" name="smtp_password"
+                               value="<?php echo sanitize($settings['smtp_password'] ?? ''); ?>"
+                               placeholder="Password email Hostinger Anda" autocomplete="new-password">
+                        <small class="text-muted">Password tersimpan terenkripsi di database.</small>
                     </div>
                 </div>
             </div>
