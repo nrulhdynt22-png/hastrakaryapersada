@@ -8,6 +8,7 @@ $meta_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : 
 ?>
 <!-- SEO Optimization -->
 <title><?php echo $meta_title; ?></title>
+<link rel="icon" type="image/svg+xml" href="<?php echo base_url('assets/img/favicon.svg'); ?>">
 <meta name="description" content="<?php echo $meta_description; ?>">
 <meta name="keywords" content="<?php echo $meta_keywords; ?>">
 <meta name="author" content="<?php echo $settings['site_name'] ?? 'PT. Hastra Karya Persada'; ?>">
