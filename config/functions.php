@@ -110,18 +110,12 @@ function generate_breadcrumbs() {
             $current_path .= $part . '/';
             // Translate common filenames to readable title
             $title = ucwords(str_replace(['-', '.php', '_'], [' ', '', ' '], $part));
-            if ($part === 'berita') {
-                $title = 'Berita & Kegiatan';
-            } elseif ($part === 'tentang') {
+            if ($part === 'tentang') {
                 $title = 'Tentang Kami';
-            } elseif ($part === 'karir') {
-                $title = 'Karir';
             } elseif ($part === 'portofolio') {
                 $title = 'Portofolio';
             } elseif ($part === 'layanan') {
                 $title = 'Layanan';
-            } elseif ($part === 'company-profile') {
-                $title = 'Company Profile';
             }
             
             // Limit page titles for detail pages
