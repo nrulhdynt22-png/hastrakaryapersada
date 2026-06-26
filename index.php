@@ -118,15 +118,7 @@ $svc_imgs = [
     </div>
     <?php $idx++; endforeach; ?>
 
-    <!-- Prev/Next arrows -->
-    <?php if (count($sliders) > 1): ?>
-    <button onclick="changeSlide(-1)" style="position:absolute;left:2rem;top:50%;transform:translateY(-50%);z-index:3;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:48px;height:48px;color:rgba(255,255,255,.7);font-size:1.2rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(201,162,39,.2)';this.style.borderColor='rgba(201,162,39,.4)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <i class="bi-chevron-left"></i>
-    </button>
-    <button onclick="changeSlide(1)" style="position:absolute;right:2rem;top:50%;transform:translateY(-50%);z-index:3;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:48px;height:48px;color:rgba(255,255,255,.7);font-size:1.2rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.background='rgba(201,162,39,.2)';this.style.borderColor='rgba(201,162,39,.4)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
-        <i class="bi-chevron-right"></i>
-    </button>
-    <?php endif; ?>
+    <!-- Prev/Next arrows removed -->
 
     <!-- Scroll Indicator -->
     <div class="hero-scroll-hint">
@@ -148,6 +140,7 @@ $svc_imgs = [
 let currentSlide = 0;
 const slides = document.querySelectorAll('.hero-slide');
 const dots   = document.querySelectorAll('.hero-dot');
+const sliderContainer = document.querySelector('.hero-slider-container');
 
 function goToSlide(n) {
     slides[currentSlide].classList.remove('active');
@@ -157,7 +150,63 @@ function goToSlide(n) {
     if (dots[currentSlide]) { dots[currentSlide].style.width = '28px'; dots[currentSlide].style.background = 'var(--gold)'; }
 }
 function changeSlide(dir) { goToSlide(currentSlide + dir); }
-if (slides.length > 1) setInterval(() => changeSlide(1), 7000);
+
+let slideInterval;
+if (slides.length > 1) {
+    // Geser otomatis (autoplay) setiap 5 detik
+    slideInterval = setInterval(() => changeSlide(1), 5000);
+
+    // Dukungan Swipe (Layar sentuh) & Drag (Mouse)
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function handleSwipe() {
+        if (touchEndX < touchStartX - 50) {
+            changeSlide(1); // Geser ke kiri (Next)
+            resetInterval();
+        }
+        if (touchEndX > touchStartX + 50) {
+            changeSlide(-1); // Geser ke kanan (Prev)
+            resetInterval();
+        }
+    }
+
+    function resetInterval() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(() => changeSlide(1), 5000);
+    }
+
+    // Touch events
+    sliderContainer.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    sliderContainer.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, {passive: true});
+
+    // Mouse events
+    let isDragging = false;
+    sliderContainer.addEventListener('mousedown', e => {
+        isDragging = true;
+        touchStartX = e.screenX;
+        sliderContainer.style.cursor = 'grabbing';
+    });
+
+    sliderContainer.addEventListener('mouseup', e => {
+        if (!isDragging) return;
+        isDragging = false;
+        touchEndX = e.screenX;
+        sliderContainer.style.cursor = 'default';
+        handleSwipe();
+    });
+    
+    sliderContainer.addEventListener('mouseleave', () => {
+        isDragging = false;
+        sliderContainer.style.cursor = 'default';
+    });
+}
 </script>
 
 
