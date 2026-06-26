@@ -4,16 +4,15 @@ require_once __DIR__ . '/auth.php';
 
 $admin_current_page = basename($_SERVER['PHP_SELF']);
 
-// Page title map
 $page_titles = [
     'index.php'           => ['Dashboard',             'Ringkasan aktivitas dan statistik konten website.'],
-    'sliders.php'         => ['Kelola Slider Beranda',  'Kelola banner slide hero pada halaman utama.'],
-    'services.php'        => ['Kelola Layanan',         'Tambah, ubah, dan hapus layanan perusahaan.'],
-    'portfolio.php'       => ['Kelola Portofolio Proyek', 'Manajemen data rekam jejak proyek konstruksi.'],
-    'company_profile.php' => ['Profil Perusahaan',      'Perbarui visi, misi, nilai, dan profil korporat.'],
+    'sliders.php'         => ['Home (Slider)',         'Kelola banner slide hero pada halaman utama.'],
+    'services.php'        => ['Layanan',               'Tambah, ubah, dan hapus layanan perusahaan.'],
+    'portfolio.php'       => ['Proyek',                'Manajemen data rekam jejak proyek konstruksi.'],
+    'company_profile.php' => ['Tentang',               'Perbarui visi, misi, nilai, dan profil korporat.'],
     'org_structure.php'   => ['Struktur Organisasi',    'Kelola hierarki jabatan dan foto anggota perusahaan.'],
-    'advantages.php'      => ['Kelola Keunggulan',      'Tambah, ubah, dan hapus keunggulan yang tampil di homepage.'],
-    'settings.php'        => ['Pengaturan Situs',       'Konfigurasi kontak, SEO, media sosial, dan statistik.'],
+    'advantages.php'      => ['Home (Keunggulan)',      'Tambah, ubah, dan hapus keunggulan yang tampil di homepage.'],
+    'settings.php'        => ['Kontak & Pengaturan',    'Konfigurasi kontak, SEO, media sosial, dan statistik.'],
 ];
 $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Persada'];
 ?>
@@ -61,32 +60,32 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
                 <i class="bi-speedometer2"></i><span>Dashboard</span>
             </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'sliders.php') ? 'active' : ''; ?>" href="sliders.php">
-                <i class="bi-images"></i><span>Slider Beranda</span>
+                <i class="bi-images"></i><span>Home (Slider)</span>
             </a>
 
             <div class="sidebar-section-label">Konten</div>
 
-            <a class="sidebar-link <?php echo ($admin_current_page === 'services.php') ? 'active' : ''; ?>" href="services.php">
-                <i class="bi-gear-wide-connected"></i><span>Kelola Layanan</span>
-            </a>
-            <a class="sidebar-link <?php echo ($admin_current_page === 'portfolio.php') ? 'active' : ''; ?>" href="portfolio.php">
-                <i class="bi-briefcase-fill"></i><span>Kelola Portofolio</span>
-            </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'company_profile.php') ? 'active' : ''; ?>" href="company_profile.php">
-                <i class="bi-building-fill"></i><span>Profil Perusahaan</span>
+                <i class="bi-building-fill"></i><span>Tentang</span>
             </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'org_structure.php') ? 'active' : ''; ?>" href="org_structure.php">
                 <i class="bi-diagram-3-fill"></i><span>Struktur Organisasi</span>
             </a>
+            <a class="sidebar-link <?php echo ($admin_current_page === 'services.php') ? 'active' : ''; ?>" href="services.php">
+                <i class="bi-gear-wide-connected"></i><span>Layanan</span>
+            </a>
+            <a class="sidebar-link <?php echo ($admin_current_page === 'portfolio.php') ? 'active' : ''; ?>" href="portfolio.php">
+                <i class="bi-briefcase-fill"></i><span>Proyek</span>
+            </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'advantages.php') ? 'active' : ''; ?>" href="advantages.php">
-                <i class="bi-stars"></i><span>Kelola Keunggulan</span>
+                <i class="bi-stars"></i><span>Home (Keunggulan)</span>
             </a>
 
 
             <div class="sidebar-section-label">Sistem</div>
 
             <a class="sidebar-link <?php echo ($admin_current_page === 'settings.php') ? 'active' : ''; ?>" href="settings.php">
-                <i class="bi-sliders"></i><span>Pengaturan Situs</span>
+                <i class="bi-sliders"></i><span>Kontak & Pengaturan</span>
             </a>
 
             <hr class="sidebar-divider">
