@@ -11,6 +11,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     } else {
         // Prepare update query
         try {
+            // Handle file uploads
+            $upload_dir = __DIR__ . '/../assets/img/';
+            
+            if (!empty($_FILES['site_logo']['tmp_name'])) {
+                $ext = strtolower(pathinfo($_FILES['site_logo']['name'], PATHINFO_EXTENSION));
+                $filename = 'logo_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['site_logo']['tmp_name'], $upload_dir . $filename)) {
+                    $_POST['site_logo'] = $filename;
+                }
+            }
+            if (!empty($_FILES['site_favicon']['tmp_name'])) {
+                $ext = strtolower(pathinfo($_FILES['site_favicon']['name'], PATHINFO_EXTENSION));
+                $filename = 'favicon_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['site_favicon']['tmp_name'], $upload_dir . $filename)) {
+                    $_POST['site_favicon'] = $filename;
+                }
+            }
+
             $stmt = $db->prepare("INSERT INTO settings (key_name, key_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE key_value = ?");
             
             // Loop through all keys from POST request except csrf_token and save_settings
@@ -56,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 
 <div class="admin-card mb-5">
     <div class="admin-card-body">
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?php echo get_csrf_token(); ?>">
         
         <div class="tab-content" id="settingsTabContent">
@@ -79,6 +97,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                     <div class="col-12">
                         <label for="site_keywords" class="form-label-admin">Meta Keywords (SEO - Pisahkan dengan koma)</label>
                         <input type="text" class="form-control-admin" id="site_keywords" name="site_keywords" required value="<?php echo sanitize($settings['site_keywords'] ?? ''); ?>">
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <h6 style="font-size:.9rem;font-weight:700;color:var(--a-navy);border-bottom:1px solid var(--a-border);padding-bottom:.75rem;margin-bottom:0;">Identitas Visual (Logo & Favicon)</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="site_logo" class="form-label-admin">Logo Website</label>
+                        <input type="file" class="form-control-admin" id="site_logo" name="site_logo" accept="image/*">
+                        <small class="text-muted d-block mt-1">Biarkan kosong jika tidak ingin mengubah. Saat ini: <a href="<?php echo base_url('assets/img/' . ($settings['site_logo'] ?? 'logo.png')); ?>" target="_blank">Lihat Logo</a></small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="site_favicon" class="form-label-admin">Ikon Web (Favicon)</label>
+                        <input type="file" class="form-control-admin" id="site_favicon" name="site_favicon" accept="image/*,.ico,.svg">
+                        <small class="text-muted d-block mt-1">Biarkan kosong jika tidak ingin mengubah. Saat ini: <a href="<?php echo base_url('assets/img/' . ($settings['site_favicon'] ?? 'favicon.svg')); ?>" target="_blank">Lihat Ikon</a></small>
                     </div>
 
                     <div class="col-12 mt-4">

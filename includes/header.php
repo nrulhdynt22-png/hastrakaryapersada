@@ -49,7 +49,7 @@ try {
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container-fluid px-0">
                 <a class="navbar-brand" href="<?php echo base_url(); ?>" style="display:flex;align-items:center;gap:.65rem;">
-                    <img src="<?php echo base_url('assets/img/logo.png'); ?>" alt="Logo PT. Hastra Karya Persada" style="height:38px;width:38px;border-radius:50%;object-fit:cover;background:#fff;padding:2px;">
+                    <img src="<?php echo base_url('assets/img/' . ($settings['site_logo'] ?? 'logo.png')); ?>" alt="Logo PT. Hastra Karya Persada" style="height:38px;width:38px;border-radius:50%;object-fit:cover;background:#fff;padding:2px;">
                     <span style="line-height:1.15;">PT. HASTRA KARYA <span>PERSADA</span></span>
                 </a>
 

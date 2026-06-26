@@ -23,7 +23,7 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pt[0]; ?> | Admin PT. Hastra Karya Persada</title>
-    <link rel="icon" type="image/svg+xml" href="<?php echo base_url('assets/img/favicon.svg'); ?>">
+    <link rel="icon" href="<?php echo base_url('assets/img/' . ($settings['site_favicon'] ?? 'favicon.svg')); ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="<?php echo base_url('assets/css/admin.css'); ?>" rel="stylesheet">
@@ -37,7 +37,7 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
         <!-- Brand -->
         <div class="sidebar-brand">
             <div style="display:flex;align-items:center;gap:.75rem;">
-                <img src="<?php echo base_url('assets/img/logo.png'); ?>" alt="Logo" style="height:36px;width:36px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#fff;padding:2px;">
+                <img src="<?php echo base_url('assets/img/' . ($settings['site_logo'] ?? 'logo.png')); ?>" alt="Logo" style="height:36px;width:36px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#fff;padding:2px;">
                 <div>
                     <h5 class="sidebar-brand-title">PT. HASTRA KARYA <span>PERSADA</span></h5>
                     <div class="sidebar-brand-sub">CMS Admin Panel</div>
