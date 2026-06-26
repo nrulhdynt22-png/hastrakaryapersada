@@ -221,9 +221,9 @@ try {
                 <div class="col-md-6">
                     <label for="category" class="form-label small fw-bold text-primary">Kategori Proyek</label>
                     <select class="form-select" id="category" name="category" required>
-                        <option value="Konstruksi" <?php echo ($action === 'edit' && $port_edit['category'] === 'Konstruksi') ? 'selected' : ''; ?>>Konstruksi & Infrastruktur</option>
-                        <option value="Pengadaan" <?php echo ($action === 'edit' && $port_edit['category'] === 'Pengadaan') ? 'selected' : ''; ?>>Pengadaan (Procurement)</option>
-                        <option value="Konsultansi" <?php echo ($action === 'edit' && $port_edit['category'] === 'Konsultansi') ? 'selected' : ''; ?>>Konsultansi Manajemen Proyek</option>
+                        <option value="Konstruksi Bangunan Gudang" <?php echo ($action === 'edit' && $port_edit['category'] === 'Konstruksi Bangunan Gudang') ? 'selected' : ''; ?>>Konstruksi Bangunan Gudang</option>
+                        <option value="Pekerjaan Struktur Baja" <?php echo ($action === 'edit' && $port_edit['category'] === 'Pekerjaan Struktur Baja') ? 'selected' : ''; ?>>Pekerjaan Struktur Baja</option>
+                        <option value="Pekerjaan Pipa" <?php echo ($action === 'edit' && $port_edit['category'] === 'Pekerjaan Pipa') ? 'selected' : ''; ?>>Pekerjaan Pipa</option>
                     </select>
                 </div>
                 <div class="col-md-6">
