@@ -16,11 +16,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <changefreq>monthly</changefreq>
     </url>
     <url>
-        <loc><?php echo base_url('company-profile.php'); ?></loc>
-        <priority>0.8</priority>
-        <changefreq>monthly</changefreq>
-    </url>
-    <url>
         <loc><?php echo base_url('layanan.php'); ?></loc>
         <priority>0.8</priority>
         <changefreq>weekly</changefreq>
@@ -28,21 +23,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <url>
         <loc><?php echo base_url('portofolio.php'); ?></loc>
         <priority>0.8</priority>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc><?php echo base_url('berita.php'); ?></loc>
-        <priority>0.8</priority>
-        <changefreq>daily</changefreq>
-    </url>
-    <url>
-        <loc><?php echo base_url('galeri.php'); ?></loc>
-        <priority>0.7</priority>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc><?php echo base_url('karir.php'); ?></loc>
-        <priority>0.7</priority>
         <changefreq>weekly</changefreq>
     </url>
     <url>
