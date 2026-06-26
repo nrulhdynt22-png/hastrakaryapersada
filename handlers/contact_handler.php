@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail_body .= "Waktu   : " . date('d-m-Y H:i:s') . "\n";
             $mail_body .= "Balas langsung ke pengirim: $email\n";
 
-            $mail_headers  = "From: noreply@hastrakarya.co.id\r\n";
-            $mail_headers .= "Reply-To: $email\r\n";
+            $mail_headers  = "From: {$site_name} <{$admin_email}>\r\n";
+            $mail_headers .= "Reply-To: {$name} <{$email}>\r\n";
             $mail_headers .= "X-Mailer: PHP/" . phpversion();
 
             $mail_sent = @mail($admin_email, $mail_subject, $mail_body, $mail_headers);
