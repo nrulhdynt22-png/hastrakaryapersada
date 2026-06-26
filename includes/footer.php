@@ -72,7 +72,7 @@
 
     <!-- WhatsApp FAB -->
     <?php if (!empty($settings['whatsapp'])): ?>
-    <a href="https://wa.me/<?php echo preg_replace('/\D/', '', $settings['whatsapp']); ?>?text=Halo%20PT.%20Hastra%20Karya%20Persada%2C%20saya%20ingin%20berkonsultasi."
+    <a href="https://wa.me/<?php echo preg_replace('/\D/', '', $settings['whatsapp']); ?>?text=<?php echo rawurlencode($settings['whatsapp_text'] ?? 'Halo PT. Hastra Karya Persada, saya ingin berkonsultasi.'); ?>"
        class="btn-whatsapp" target="_blank" title="Chat via WhatsApp">
         <i class="bi-whatsapp"></i>
     </a>

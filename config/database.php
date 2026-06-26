@@ -207,6 +207,7 @@ class Database {
                 'email' => 'info@hastrakarya.co.id',
                 'phone' => '+62 21 8888 9999',
                 'whatsapp' => '6281234567890',
+                'whatsapp_text' => 'Halo PT. Hastra Karya Persada, saya ingin berkonsultasi mengenai layanan konstruksi.',
                 'address' => 'Gedung Menara Karya Lt. 22, Jl. H.R. Rasuna Said Block X-5, Jakarta Selatan 12950',
                 'google_maps' => '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2672079032766!2d106.82869557457788!3d-6.228458793759714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e498c0d959%3A0x7d0ccf8b056be11c!2sMenara%20Karya!5e0!3m2!1sid!2sid!4v1719213456789!5m2!1sid!2sid\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>',
                 'social_facebook' => 'https://facebook.com/hastrakarya',

@@ -11,12 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     } else {
         // Prepare update query
         try {
-            $stmt = $db->prepare("UPDATE settings SET key_value = ? WHERE key_name = ?");
+            $stmt = $db->prepare("INSERT INTO settings (key_name, key_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE key_value = ?");
             
             // Loop through all keys from POST request except csrf_token and save_settings
             foreach ($_POST as $key => $value) {
                 if ($key === 'csrf_token' || $key === 'save_settings') continue;
-                $stmt->execute([$value, $key]);
+                $stmt->execute([$key, $value, $value]);
             }
             
             $success_msg = 'Pengaturan website berhasil diperbarui!';
@@ -130,6 +130,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                     <div class="col-md-4">
                         <label for="whatsapp" class="form-label-admin">No. WhatsApp Hubungan Cepat (Format Internasional)</label>
                         <input type="text" class="form-control-admin" id="whatsapp" name="whatsapp" required value="<?php echo sanitize($settings['whatsapp'] ?? ''); ?>">
+                    </div>
+                    <div class="col-12">
+                        <label for="whatsapp_text" class="form-label-admin">Pesan Teks Default WhatsApp</label>
+                        <textarea class="form-control-admin" id="whatsapp_text" name="whatsapp_text" rows="2" required placeholder="Contoh: Halo PT. Hastra Karya Persada, saya ingin berkonsultasi..."><?php echo sanitize($settings['whatsapp_text'] ?? 'Halo PT. Hastra Karya Persada, saya ingin berkonsultasi.'); ?></textarea>
                     </div>
                     <div class="col-12">
                         <label for="address" class="form-label-admin">Alamat Lengkap Kantor Pusat</label>

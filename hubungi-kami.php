@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_message'])) {
 
                     <!-- WhatsApp Contact Call-out -->
                     <?php if (!empty($settings['whatsapp'])): ?>
-                    <a href="https://wa.me/<?php echo preg_replace('/\D/', '', $settings['whatsapp']); ?>?text=Halo%20PT.%20Hastra%20Karya%20Persada%2C%20saya%20ingin%20berkonsultasi." target="_blank" class="whatsapp-card text-decoration-none">
+                    <a href="https://wa.me/<?php echo preg_replace('/\D/', '', $settings['whatsapp'] ?? ''); ?>?text=<?php echo rawurlencode($settings['whatsapp_text'] ?? 'Halo PT. Hastra Karya Persada, saya ingin berkonsultasi.'); ?>" target="_blank" class="whatsapp-card text-decoration-none">
                         <div class="wa-icon">
                             <i class="bi-whatsapp"></i>
                         </div>
