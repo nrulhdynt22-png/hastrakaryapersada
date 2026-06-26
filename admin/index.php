@@ -32,11 +32,11 @@ try {
 <div class="row g-3 mt-1">
     <?php
     $quick = [
-        ['sliders.php',         'bi-images',                  'Slider Beranda',   'Kelola banner hero homepage'],
-        ['services.php',        'bi-gear-wide-connected',     'Kelola Layanan',   'Tambah atau edit layanan'],
-        ['portfolio.php',       'bi-building',                'Kelola Proyek',    'Rekam jejak proyek unggulan'],
-        ['company_profile.php', 'bi-file-earmark-person-fill','Kelola Tentang',   'Profil & sambutan perusahaan'],
-        ['settings.php',        'bi-sliders',                 'Pengaturan Situs', 'SEO, kontak, maps, statistik'],
+        ['sliders.php',         'bi-images',                  'Kelola Slider',      'Kelola banner hero homepage'],
+        ['services.php',        'bi-gear-wide-connected',     'Kelola Layanan',     'Tambah atau edit layanan'],
+        ['portfolio.php',       'bi-briefcase-fill',          'Kelola Portofolio',  'Rekam jejak proyek konstruksi'],
+        ['company_profile.php', 'bi-building-fill',           'Profil Perusahaan',  'Visi, misi, nilai & profil korporat'],
+        ['settings.php',        'bi-sliders',                 'Pengaturan Situs',   'SEO, kontak, maps, statistik'],
     ];
     foreach ($quick as $q): ?>
     <div class="col-md-4 col-sm-6">

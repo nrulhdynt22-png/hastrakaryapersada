@@ -6,15 +6,14 @@ $admin_current_page = basename($_SERVER['PHP_SELF']);
 
 // Page title map
 $page_titles = [
-    'index.php'           => ['Dashboard',          'Ringkasan aktivitas dan statistik konten.'],
-    'sliders.php'         => ['Slider Beranda',      'Kelola banner slide pada halaman utama.'],
-    'services.php'        => ['Kelola Layanan',      'Tambah, ubah, dan hapus layanan perusahaan.'],
-    'portfolio.php'       => ['Kelola Proyek',       'Manajemen data rekam jejak proyek konstruksi.'],
-    'company_profile.php' => ['Kelola Tentang',      'Perbarui profil korporat dan teks sambutan.'],
-    'org_structure.php'   => ['Struktur Organisasi', 'Kelola hierarki dan foto anggota struktur perusahaan.'],
-    'advantages.php'      => ['Kelola Keunggulan',   'Tambah, ubah, dan hapus keunggulan perusahaan di homepage.'],
-
-    'settings.php'        => ['Pengaturan Situs',    'Konfigurasi kontak, SEO, media sosial, dan statistik.'],
+    'index.php'           => ['Dashboard',             'Ringkasan aktivitas dan statistik konten website.'],
+    'sliders.php'         => ['Kelola Slider Beranda',  'Kelola banner slide hero pada halaman utama.'],
+    'services.php'        => ['Kelola Layanan',         'Tambah, ubah, dan hapus layanan perusahaan.'],
+    'portfolio.php'       => ['Kelola Portofolio Proyek', 'Manajemen data rekam jejak proyek konstruksi.'],
+    'company_profile.php' => ['Profil Perusahaan',      'Perbarui visi, misi, nilai, dan profil korporat.'],
+    'org_structure.php'   => ['Struktur Organisasi',    'Kelola hierarki jabatan dan foto anggota perusahaan.'],
+    'advantages.php'      => ['Kelola Keunggulan',      'Tambah, ubah, dan hapus keunggulan yang tampil di homepage.'],
+    'settings.php'        => ['Pengaturan Situs',       'Konfigurasi kontak, SEO, media sosial, dan statistik.'],
 ];
 $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Persada'];
 ?>
@@ -71,16 +70,16 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
                 <i class="bi-gear-wide-connected"></i><span>Kelola Layanan</span>
             </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'portfolio.php') ? 'active' : ''; ?>" href="portfolio.php">
-                <i class="bi-briefcase-fill"></i><span>Kelola Proyek</span>
+                <i class="bi-briefcase-fill"></i><span>Kelola Portofolio</span>
             </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'company_profile.php') ? 'active' : ''; ?>" href="company_profile.php">
-                <i class="bi-file-earmark-person-fill"></i><span>Kelola Tentang</span>
+                <i class="bi-building-fill"></i><span>Profil Perusahaan</span>
             </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'org_structure.php') ? 'active' : ''; ?>" href="org_structure.php">
                 <i class="bi-diagram-3-fill"></i><span>Struktur Organisasi</span>
             </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'advantages.php') ? 'active' : ''; ?>" href="advantages.php">
-                <i class="bi-stars"></i><span>Keunggulan</span>
+                <i class="bi-stars"></i><span>Kelola Keunggulan</span>
             </a>
 
 
