@@ -189,6 +189,16 @@ class Database {
                 `description` TEXT NOT NULL,
                 `sort_order` INT NOT NULL DEFAULT 0
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS `contact_messages` (
+                `id` INT AUTO_INCREMENT PRIMARY KEY,
+                `name` VARCHAR(100) NOT NULL,
+                `email` VARCHAR(150) NOT NULL,
+                `subject` VARCHAR(255) NOT NULL,
+                `message` TEXT NOT NULL,
+                `is_read` TINYINT NOT NULL DEFAULT 0,
+                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
             ";
 
             $this->conn->exec($sql);

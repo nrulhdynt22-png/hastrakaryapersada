@@ -13,8 +13,15 @@ $page_titles = [
     'org_structure.php'   => ['Struktur Organisasi',    'Kelola hierarki jabatan dan foto anggota perusahaan.'],
     'advantages.php'      => ['Home (Keunggulan)',      'Tambah, ubah, dan hapus keunggulan yang tampil di homepage.'],
     'partners.php'        => ['Home (Mitra)',           'Kelola nama mitra atau klien yang ditampilkan di homepage.'],
+    'messages.php'        => ['Pesan Masuk',            'Kelola pesan yang dikirimkan melalui form kontak website.'],
     'settings.php'        => ['Kontak & Pengaturan',    'Konfigurasi kontak, SEO, media sosial, dan statistik.'],
 ];
+
+// Hitung pesan belum dibaca untuk badge sidebar
+$_unread_messages = 0;
+try {
+    $_unread_messages = (int)$db->query("SELECT COUNT(*) FROM contact_messages WHERE is_read = 0")->fetchColumn();
+} catch (Exception $e) { /* tabel belum ada */ }
 $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Persada'];
 ?>
 <!DOCTYPE html>
@@ -88,6 +95,13 @@ $pt = $page_titles[$admin_current_page] ?? ['Admin Panel', 'PT. Hastra Karya Per
 
             <div class="sidebar-section-label">Sistem</div>
 
+            <a class="sidebar-link <?php echo ($admin_current_page === 'messages.php') ? 'active' : ''; ?>" href="messages.php">
+                <i class="bi-inbox-fill"></i>
+                <span>Pesan Masuk</span>
+                <?php if ($_unread_messages > 0): ?>
+                <span class="ms-auto badge rounded-pill" style="background:var(--a-gold);color:#fff;font-size:.65rem;padding:.25em .55em;"><?php echo $_unread_messages; ?></span>
+                <?php endif; ?>
+            </a>
             <a class="sidebar-link <?php echo ($admin_current_page === 'settings.php') ? 'active' : ''; ?>" href="settings.php">
                 <i class="bi-sliders"></i><span>Kontak & Pengaturan</span>
             </a>
