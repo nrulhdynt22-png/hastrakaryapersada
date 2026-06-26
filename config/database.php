@@ -206,7 +206,7 @@ class Database {
             // Seed default administrator: username = admin, password = admin123
             $hashedPassword = password_hash('admin123', PASSWORD_DEFAULT);
             $stmt = $this->conn->prepare("INSERT INTO `admins` (username, password, email) VALUES (?, ?, ?)");
-            $stmt->execute(['admin', $hashedPassword, 'info@hastrakarya.co.id']);
+            $stmt->execute(['admin', $hashedPassword, 'info@hastrakaryapersada.com']);
 
             // Seed settings
             $settings = [
@@ -214,7 +214,7 @@ class Database {
                 'site_tagline' => 'Solusi Profesional dan Terpercaya untuk Kemajuan Bisnis Anda',
                 'site_description' => 'PT. Hastra Karya Persada berkomitmen memberikan layanan terbaik dengan standar kualitas tinggi dan profesionalisme yang unggul dalam bidang konstruksi, pengadaan, dan konsultansi.',
                 'site_keywords' => 'hastra karya persada, konstruksi jakarta, kontraktor profesional, pembangunan gedung, pdo php, company profile enterprise',
-                'email' => 'info@hastrakarya.co.id',
+                'email' => 'info@hastrakaryapersada.com',
                 'phone' => '+62 21 8888 9999',
                 'whatsapp' => '6281234567890',
                 'whatsapp_text' => 'Halo PT. Hastra Karya Persada, saya ingin berkonsultasi mengenai layanan konstruksi.',

@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // === 2. KIRIM EMAIL NOTIFIKASI KE ADMIN ===
-            $admin_email = $settings['email'] ?? 'info@hastrakarya.co.id';
+            $admin_email = $settings['email'] ?? 'info@hastrakaryapersada.com';
             $site_name   = $settings['site_name'] ?? 'PT. Hastra Karya Persada';
 
             $mail_subject = "[Pesan Baru] $subject — dari $name";
