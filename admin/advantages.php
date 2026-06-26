@@ -1,5 +1,6 @@
 <?php
-include __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../config/functions.php';
+require_once __DIR__ . '/includes/auth.php';
 
 $msg = '';
 $msg_type = 'success';
@@ -46,6 +47,8 @@ if (isset($_GET['edit'])) {
 
 // FETCH ALL
 $advantages = $db->query("SELECT * FROM advantages ORDER BY sort_order ASC, id ASC")->fetchAll();
+
+include __DIR__ . '/includes/header.php';
 
 // CREATE TABLE if it doesn't exist yet (for existing installations)
 try {

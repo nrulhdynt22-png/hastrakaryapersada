@@ -1,5 +1,6 @@
 <?php
-include __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/../config/functions.php';
+require_once __DIR__ . '/includes/auth.php';
 
 $success_msg = '';
 $error_msg = '';
@@ -114,6 +115,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_org'])) {
 // --- Fetch all members ---
 $members = $db->query("SELECT * FROM org_structure ORDER BY sort_order ASC, id ASC")->fetchAll();
 $all_ids = array_column($members, 'id');
+
+include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Header -->
@@ -189,7 +192,7 @@ $all_ids = array_column($members, 'id');
                                      style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(201,162,39,.4);" alt="Foto">
                             </div>
                             <div>
-                                <a href="org_structure.php?delete_photo=<?php echo $edit_data['id']; ?>" class="btn btn-sm btn-outline-danger" style="border-radius:100px;font-size:0.75rem;" onclick="return confirm('Yakin ingin menghapus foto ini?');">
+                                <a href="org_structure.php?delete_photo=<?php echo $edit_data['id']; ?>" class="btn btn-sm btn-outline-danger" style="border-radius:100px;font-size:0.75rem;" id="deletePhotoBtn">
                                     <i class="bi-trash"></i> Hapus Foto
                                 </a>
                             </div>
@@ -313,5 +316,103 @@ $all_ids = array_column($members, 'id');
         </div>
     </div>
 </div>
+
+<!-- ===== DELETE PHOTO CONFIRMATION MODAL ===== -->
+<div id="deletePhotoModal" style="
+    display:none;
+    position:fixed;inset:0;z-index:99999;
+    background:rgba(6,16,31,.65);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    align-items:center;justify-content:center;
+">
+    <div style="
+        background:#fff;
+        border-radius:20px;
+        padding:2.5rem 2.25rem;
+        max-width:380px;width:90%;
+        box-shadow:0 32px 80px rgba(6,16,31,.35);
+        border:1px solid rgba(220,38,38,.15);
+        text-align:center;
+        animation:modalPop .3s cubic-bezier(.34,1.56,.64,1);
+        position:relative;
+    ">
+        <!-- Icon -->
+        <div style="
+            width:68px;height:68px;border-radius:50%;
+            background:rgba(239,68,68,.08);
+            border:2px solid rgba(239,68,68,.2);
+            display:flex;align-items:center;justify-content:center;
+            margin:0 auto 1.5rem;
+            box-shadow:0 8px 24px rgba(239,68,68,.15);
+        ">
+            <i class="bi-trash3" style="font-size:1.75rem;color:#dc2626;"></i>
+        </div>
+
+        <!-- Text -->
+        <h5 style="font-family:'Outfit',sans-serif;font-weight:800;color:#0B1F3A;margin-bottom:.5rem;font-size:1.2rem;">Konfirmasi Hapus Foto</h5>
+        <p style="color:#64748B;font-size:.9rem;margin-bottom:2rem;line-height:1.6;">Apakah Anda yakin ingin menghapus foto dari<br><strong style="color:#0B1F3A;">anggota ini?</strong></p>
+
+        <!-- Buttons -->
+        <div style="display:flex;gap:.75rem;">
+            <button id="deletePhotoCancel" style="
+                flex:1;padding:.75rem;border-radius:100px;
+                border:1.5px solid rgba(11,31,58,.15);
+                background:transparent;color:#0B1F3A;
+                font-size:.9rem;font-weight:600;
+                cursor:pointer;font-family:'Outfit',sans-serif;
+                transition:all .25s;
+            " onmouseover="this.style.background='#F4F6FA'" onmouseout="this.style.background='transparent'">
+                Batal
+            </button>
+            <button id="deletePhotoConfirm" style="
+                flex:1;padding:.75rem;border-radius:100px;
+                background:linear-gradient(135deg,#dc2626,#ef4444);
+                color:#ffffff;
+                font-size:.9rem;font-weight:700;
+                border:none;cursor:pointer;display:flex;
+                align-items:center;justify-content:center;gap:.45rem;
+                box-shadow:0 4px 14px rgba(220,38,38,.35);
+                transition:all .3s;font-family:'Outfit',sans-serif;
+            ">
+                <i class="bi-trash3-fill"></i> Ya, Hapus
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const deletePhotoBtn = document.getElementById('deletePhotoBtn');
+    const deletePhotoModal = document.getElementById('deletePhotoModal');
+    const deletePhotoCancel = document.getElementById('deletePhotoCancel');
+    const deletePhotoConfirm = document.getElementById('deletePhotoConfirm');
+
+    if (deletePhotoBtn && deletePhotoModal) {
+        deletePhotoBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const deleteUrl = this.getAttribute('href');
+            deletePhotoConfirm.onclick = function() {
+                window.location.href = deleteUrl;
+            };
+            deletePhotoModal.style.display = 'flex';
+        });
+    }
+
+    if (deletePhotoCancel) {
+        deletePhotoCancel.addEventListener('click', function() {
+            deletePhotoModal.style.display = 'none';
+        });
+    }
+
+    if (deletePhotoModal) {
+        deletePhotoModal.addEventListener('click', function(e) {
+            if (e.target === deletePhotoModal) {
+                deletePhotoModal.style.display = 'none';
+            }
+        });
+    }
+});
+</script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
